@@ -1,0 +1,67 @@
+# CMB acoustic prior with CLASS, flat LCDM.
+# Run:  cobaya-run SPT3GD1_class.yaml
+theory:
+  classy:
+    # CLASS only receives the sampled parameters listed here. If you sample
+    # more CLASS parameters (e.g. w0_fld, wa_fld), add them to this list.
+    input_params: [theta_s_100, omegabh2, omegach2]
+    extra_args:
+      # Required: theta_* must not include reionization to match the prior
+      # (with CLASS's default reionization, 100 theta_* is ~15 sigma higher).
+      reio_parametrization: reio_none
+      recombination: HyRec
+      N_ncdm: 1
+      m_ncdm: 0.06
+      N_ur: 2.0308
+      T_cmb: 2.7255
+      YHe: BBN
+      sBBN file: sBBN_2025_primat.dat
+
+likelihood:
+  # Gaussian prior on (theta_*, omega_b, omega_bc), with omega_bc = omega_b + omega_c.
+  # Data: SPT-3G D1
+  cmb_acoustic:
+    external: |
+      (lambda mean, cov: lambda _self: -0.5 * (lambda d: d @ np.linalg.solve(cov, d))(
+          np.array([_self.provider.get_param('theta_star_100') / 100,
+                    _self.provider.get_param('omegabh2'),
+                    _self.provider.get_param('omegabh2') + _self.provider.get_param('omegach2')]) - mean))(
+        np.array([1.0408712799e-02, 2.2221788736e-02, 1.4527338578e-01]),
+        np.array([[4.6171699641e-11, -1.4419929152e-10, -1.7864713588e-08],
+                  [-1.4419929152e-10, 4.5909458589e-08, -6.3236492429e-08],
+                  [-1.7864713588e-08, -6.3236492429e-08, 2.8087269992e-05]]))
+    requires: {theta_star_100: null, omegabh2: null, omegach2: null}
+  # Add late-time likelihoods here, e.g.
+  # bao.desi_dr2.desi_bao_all:
+
+params:
+  theta_s_100:
+    prior: {min: 0.5, max: 10}
+    ref: {dist: norm, loc: 1.0419, scale: 0.0004}
+    proposal: 0.0002
+    latex: 100\theta_\mathrm{s}
+  omegabh2:
+    prior: {min: 0.005, max: 0.1}
+    ref: {dist: norm, loc: 0.0224, scale: 0.0002}
+    proposal: 0.0001
+    latex: \Omega_\mathrm{b} h^2
+  omegach2:
+    prior: {min: 0.001, max: 0.99}
+    ref: {dist: norm, loc: 0.1185, scale: 0.002}
+    proposal: 0.001
+    latex: \Omega_\mathrm{c} h^2
+  H0:
+    latex: H_0
+  theta_star_100:
+    latex: 100\theta_*
+  omegam:
+    latex: \Omega_\mathrm{m}
+  rdrag:
+    latex: r_\mathrm{drag}
+
+sampler:
+  mcmc:
+    Rminus1_stop: 0.01
+    max_tries: .inf
+
+output: chains/SPT3GD1_class
