@@ -1,0 +1,729 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fafaf8">
+  <meta name="description" content="Late-time agnostic CMB Prior: an interactive three-parameter CMB Gaussian prior that retains early-universe physics while marginalizing late-time effects. Generate Cobaya YAML for CAMB or CLASS.">
+  <title>Late-time agnostic CMB Prior | YAML Configurator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- YAML syntax highlighting (CDN). Content remains readable if the CDN is unavailable. -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+  <style>
+
+:root {
+  color-scheme: light;
+  --paper: #fafaf8;
+  --white: #ffffff;
+  --ink: #263635;
+  --muted: #61716e;
+  --faint: #8a9994;
+  --line: #dce3de;
+  --line-strong: #b8c9c0;
+  --accent: #316d66;
+  --accent-soft: #eff5f2;
+  --mono: "IBM Plex Mono", Consolas, monospace;
+  --body: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --display: "Source Serif 4", Georgia, serif;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+body { background: var(--paper); color: var(--ink); margin: 0; min-width: 320px; font: 15px/1.62 var(--body); -webkit-font-smoothing: antialiased; }
+::selection { background: #d1e7dc; color: #1f3935; }
+button, select { font: inherit; }
+button { cursor: pointer; }
+a { color: inherit; }
+button:focus-visible, select:focus-visible, a:focus-visible, .code-scroll:focus-visible { outline: 2px solid #507c76; outline-offset: 3px; }
+.container { width: min(1160px, calc(100% - 80px)); margin-inline: auto; }
+h1,h2,h3,p { margin-top: 0; }
+.site-header { background: #fff; border-bottom: 1px solid var(--line); }
+.header-inner { display: flex; justify-content: space-between; align-items: center; min-height: 66px; gap: 18px; }
+.brand { color: #273d38; text-decoration: none; font-size: 15px; font-weight: 600; letter-spacing: -.018em; }
+.brand:hover { color: var(--accent); }
+.site-nav { display: flex; align-items: center; gap: 28px; font-size: 13px; color: #5a6b66; }
+.site-nav a { text-decoration: none; border-bottom: 1px solid transparent; padding: 4px 0; }
+.site-nav a:hover { color: var(--accent); border-color: var(--accent); }
+.site-nav .nav-pill { color: #315f58; border-bottom: 1px solid #8fb6a5; }
+.hero { padding-top: 69px; }
+.hero-head { max-width: 900px; margin-bottom: 34px; }
+.eyebrow { display: block; text-transform: none; font-size: 12px; letter-spacing: .025em; font-weight: 600; color: var(--accent); margin-bottom: 17px; }
+h1 { font: 500 clamp(40px, 4.4vw, 58px)/1.14 var(--display); letter-spacing: -.025em; margin-bottom: 21px; }
+.hero-lead { margin: 0; max-width: 805px; color: #4c5e5b; font-size: 16px; line-height: 1.75; }
+.hero-lead strong { color: #2c4640; font-weight: 600; }
+.astro-figure { margin: 0; background: #fff; border: 1px solid var(--line); border-radius: 3px; overflow: hidden; }
+.figure-overline { display: none; }
+.diagram-svg { display: block; width: 100%; height: auto; }
+.diagram-mobile { display: none; }
+.diagram-svg text, .diagram-mobile text { font-family: var(--body); }
+.diagram-svg .mono, .diagram-mobile .mono { font-family: var(--mono); }
+.diagram-caption { padding: 13px 19px; border-top: 1px solid var(--line); color: #5c6d68; font-size: 12.5px; display: flex; gap: 16px; justify-content: space-between; align-items: start; }
+.diagram-caption strong { color: #314a42; font-weight: 600; }
+.diagram-caption .caption-formula { font: 11.5px/1.5 var(--mono); color: #5a706a; white-space: nowrap; }
+.config-section { padding-top: 80px; padding-bottom: 88px; }
+.section-kicker { color: var(--accent); font-size: 12px; font-weight: 600; margin-bottom: 10px; letter-spacing: .015em; }
+.section-heading { font: 500 clamp(30px, 3.25vw, 40px)/1.19 var(--display); letter-spacing: -.016em; margin: 0 0 8px; }
+.section-desc { color: var(--muted); font-size: 14px; margin: 0 0 27px; }
+.config-grid { display: grid; grid-template-columns: minmax(340px, .92fr) minmax(0, 1.08fr); gap: 33px; align-items: start; }
+.builder { border: 1px solid var(--line); background: var(--white); border-radius: 3px; }
+.field-card { padding: 20px 23px 24px; border-bottom: 1px solid var(--line); }
+.field-card:last-child { border-bottom: 0; }
+.field-top { margin-bottom: 15px; }
+.field-top h3 { font-weight: 600; font-size: 15px; line-height: 1.4; margin: 0 0 2px; }
+.field-top p { margin: 0; color: #71827d; font-size: 12.5px; line-height: 1.4; }
+.step-index { display: none; }
+.dataset-wrap { position: relative; }
+select { appearance: none; border: 1px solid #bdcac3; border-radius: 3px; background: #fff; color: #263b36; width: 100%; height: 43px; padding: 0 39px 0 12px; font-size: 12.8px; }
+select:hover, select:focus { border-color: var(--accent); }
+.select-chevron { position: absolute; right: 13px; top: 12px; width: 17px; pointer-events: none; color: #607b72; }
+.dataset-detail { margin: 10px 0 0; color: #73837e; font-size: 11.7px; }
+.options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.options.triple { grid-template-columns: 1fr; }
+.choice { width: 100%; min-width: 0; min-height: 54px; padding: 10px 13px; text-align: left; display: flex; align-items: center; justify-content: space-between; gap: 8px; border: 1px solid #d5ded8; border-radius: 3px; background: #fff; color: #40534c; transition: border-color .12s ease, background-color .12s ease; }
+.choice:hover:not(:disabled) { border-color: #7b9e8d; background: #f9fbf9; }
+.choice[aria-checked="true"] { border-color: var(--accent); background: var(--accent-soft); color: #234f46; }
+.choice:disabled { cursor: not-allowed; color: #a3aca7; background: #f9faf9; border-color: #e8ece9; }
+.choice:disabled .choice-info { color: #b2bab5; }
+.choice-text { display: block; min-width: 0; }
+.choice-code { display: block; font: 500 11.7px/1.45 var(--mono); letter-spacing: -.025em; overflow-wrap: anywhere; }
+.choice-info { display: block; font-size: 10.8px; line-height: 1.3; color: #758880; margin-top: 3px; }
+.choice-check { flex-shrink: 0; display: inline-block; height: 13px; width: 13px; border: 1px solid #9fb2a9; border-radius: 50%; }
+.choice[aria-checked="true"] .choice-check { border: 4px solid var(--accent); background: #fff; }
+.choice:disabled .choice-check { border-color: #cfd8d1; }
+.option-heading { color: #6c7d77; font-size: 11px; font-weight: 600; text-transform: none; letter-spacing: .015em; margin: 0 0 9px; }
+.third-options { display: grid; gap: 21px; }
+.small-choices { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; }
+.small-choices .choice { min-height: 52px; }
+.small-choices .choice-code { font-size: 10.7px; }
+.small-choices .choice.wide { grid-column: 1 / -1; }
+.config-result { background: #fff; border: 1px solid var(--line); border-radius: 3px; overflow: hidden; position: sticky; top: 15px; }
+.result-heading { background: #fff; padding: 19px 21px 18px; border-bottom: 1px solid var(--line); }
+.result-overline { color: #52756a; font-size: 11px; font-weight: 600; }
+.ready-dot { display: none; }
+.result-heading h3 { font: 500 25px/1.3 var(--display); letter-spacing: -.01em; margin: 6px 0 6px; }
+.result-summary { color: #778680; font: 11px/1.5 var(--mono); overflow-wrap: anywhere; }
+.toolbar { min-height: 51px; padding: 9px 12px 9px 20px; display: flex; justify-content: space-between; align-items: center; gap: 10px; background: #f5f7f4; border-bottom: 1px solid var(--line); }
+.file-identity { display: flex; align-items: center; gap: 9px; color: #536a60; font: 11px var(--mono); min-width: 0; }
+.file-identity svg { flex-shrink: 0; }
+#filename { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.toolbar-actions { display: flex; gap: 6px; flex-shrink: 0; }
+.icon-btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 34px; border: 1px solid #bbc9c1; border-radius: 3px; padding: 0 10px; background: #fff; color: #38574e; font-size: 11px; font-weight: 600; }
+.icon-btn:hover { border-color: var(--accent); color: #184c3f; }
+.icon-btn.primary { background: #315e55; border-color: #315e55; color: #fff; }
+.icon-btn.primary:hover { background: #234c45; }
+.icon-btn svg { width: 14px; height: 14px; }
+.code-scroll { overflow: auto; max-height: 690px; min-height: 515px; background: #1f282c; scrollbar-color: #72837a transparent; }
+/* Prism highlighting remains loaded from the CDN. */
+pre[class*="language-"] { margin: 0 !important; padding: 21px 23px 24px !important; border: none !important; border-radius: 0 !important; background: #1f282c !important; overflow: visible !important; text-shadow: none !important; font: 11.2px/1.78 var(--mono) !important; tab-size: 2; }
+pre[class*="language-"] code[class*="language-"] { white-space: pre !important; background: transparent !important; color: #e7eae6; text-shadow: none !important; font: inherit !important; }
+.token.comment { color: #a0b0a5 !important; }
+.token.key, .token.atrule, .token.property { color: #acdccb !important; }
+.token.string, .token.scalar { color: #e8cc9e !important; }
+.token.number, .token.boolean { color: #cfc3ec !important; }
+.result-footer { display: flex; align-items: start; gap: 8px; color: #667771; padding: 12px 20px 15px; font-size: 11.7px; line-height: 1.5; background: #fff; border-top: 1px solid var(--line); }
+.result-footer svg { flex-shrink: 0; width: 14px; height: 14px; color: #5b796e; margin-top: 1px; }
+.research-section { border-top: 1px solid var(--line); padding: 48px 0 62px; background: #fff; }
+.research-content { max-width: 1160px; }
+.bottom-title { font: 500 29px/1.3 var(--display); letter-spacing: -.015em; margin: 6px 0 13px; }
+.bottom-copy { color: #586b63; max-width: 770px; font-size: 13.7px; line-height: 1.7; margin: 0 0 13px; }
+.cite-author { color: #304a42; }
+.note-inline { color: #6e8076; font-size: 12px; max-width: 790px; margin-top: 16px; }
+.note-inline svg { display: none; }
+footer { padding: 20px 0 28px; border-top: 1px solid var(--line); color: #78877f; font-size: 11.5px; background: #fff; }
+.footer-inner { display: flex; justify-content: space-between; gap: 15px; }
+.footer-inner strong { font-weight: 500; }
+[hidden] { display: none !important; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+@media (max-width: 1040px) {
+  .container { width: min(100% - 48px, 1160px); }
+  .config-grid { gap: 20px; grid-template-columns: minmax(300px,.91fr) minmax(0,1.09fr); }
+  .field-card { padding: 18px; }
+  .choice { padding: 9px 10px; }
+  .small-choices .choice-code { font-size: 10px; }
+}
+@media (max-width: 800px) {
+  .hero { padding-top: 46px; }
+  h1 { font-size: clamp(37px, 6vw, 49px); }
+  .hero-lead { font-size: 15px; }
+  .diagram-svg { display: none; }
+  .diagram-mobile { display: block; width: min(100%, 540px); margin: 0 auto; height: auto; }
+  .config-grid { grid-template-columns: 1fr; }
+  .config-result { position: static; }
+  .options.triple { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .config-section { padding-top: 65px; padding-bottom: 65px; }
+  .code-scroll { min-height: 450px; }
+}
+@media (max-width: 560px) {
+  .container { width: calc(100% - 32px); }
+  .header-inner { min-height: 62px; }
+  .brand { font-size: 12.5px; }
+  .site-nav { gap: 14px; font-size: 11px; }
+  .site-nav a:not(.nav-pill) { display: none; }
+  .hero { padding-top: 39px; }
+  .eyebrow { font-size: 11px; }
+  h1 { font-size: 37px; line-height: 1.16; margin-bottom: 16px; }
+  .hero-head { margin-bottom: 26px; }
+  .hero-lead { font-size: 14px; }
+  .diagram-caption { display: block; padding: 12px 14px; }
+  .diagram-caption .caption-formula { display: block; margin-top: 7px; }
+  .config-section { padding-top: 55px; padding-bottom: 56px; }
+  .field-card { padding: 17px 15px 19px; }
+  .section-desc { font-size: 13px; }
+  .options.triple { grid-template-columns: 1fr; }
+  .small-choices { grid-template-columns: 1fr; }
+  .small-choices .choice.wide { grid-column: auto; }
+  .small-choices .choice-code { font-size: 11.7px; }
+  .toolbar { padding: 9px 10px; }
+  .icon-btn { padding-inline: 9px; }
+  .icon-btn .btn-text { display: none; }
+  .code-scroll { min-height: 410px; max-height: 530px; }
+  pre[class*="language-"] { padding: 17px !important; font-size: 10.5px !important; }
+  .research-section { padding: 38px 0 50px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
+}
+
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#top">Late-time agnostic CMB Prior</a>
+      <nav class="site-nav" aria-label="Site navigation">
+        <a href="#overview">Overview</a>
+        <a href="#citation">Reference</a>
+        <a class="nav-pill" href="#configurator">Configure</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="container hero" id="overview" aria-labelledby="hero-title">
+  <div class="hero-head">
+    <div class="eyebrow">CMB compression &amp; Gaussian distance priors</div>
+    <h1 id="hero-title">Late-time agnostic CMB Prior</h1>
+    <p class="hero-lead">The acoustic features of the CMB constrain the angular sound horizon and the physical baryon and cold-dark-matter densities. This prior retains those three correlated quantities while removing or marginalizing the late-time contributions to the observed spectra.</p>
+  </div>
+  <figure class="astro-figure" aria-label="Diagram of late-time agnostic CMB compression">
+    <svg class="diagram-svg" viewBox="0 0 1120 338" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="figure-title figure-description">
+      <title id="figure-title">Retaining pre-recombination acoustic information while marginalizing late-time effects</title>
+      <desc id="figure-description">Observed CMB spectra are separated into early acoustic information retained in a Gaussian prior on three parameters, and late-time effects and nuisance contributions that are marginalized or removed.</desc>
+      <defs>
+        <marker id="fig-arr" markerWidth="8" markerHeight="8" refX="6.2" refY="4" orient="auto"><path d="M1 1 L6 4 L1 7" fill="none" stroke="#416f63" stroke-width="1.4" stroke-linecap="round"/></marker>
+      </defs>
+      <rect width="1120" height="338" fill="#ffffff"/>
+      <g fill="none" stroke="#ccd8d1" stroke-width="1.2">
+        <rect x="24" y="40" width="254" height="261" rx="2"/>
+        <rect x="376" y="40" width="340" height="115" rx="2" fill="#eff5f1"/>
+        <rect x="376" y="185" width="340" height="116" rx="2" stroke-dasharray="5 4" fill="#f7f7f5"/>
+        <rect x="813" y="40" width="283" height="261" rx="2" fill="#f9fbf9"/>
+      </g>
+      <g fill="#273e37">
+        <text x="45" y="70" font-size="17" font-weight="600">Observed CMB</text>
+        <text x="45" y="89" font-size="11.5" fill="#75857b">TT · TE · EE spectra</text>
+        <text x="395" y="68" font-size="17" font-weight="600">Early acoustic information</text>
+        <text x="395" y="91" font-size="12.5" fill="#50675d">Peak positions, relative heights and damping</text>
+        <text x="395" y="116" font-size="12.5" fill="#50675d">Set by pre-recombination physics</text>
+        <text x="395" y="214" font-size="16" font-weight="600" fill="#636e69">Late-time / nuisance effects</text>
+        <text x="395" y="237" font-size="12.5" fill="#7a827f">Lensing, late ISW, reionization</text>
+        <text x="395" y="259" font-size="12.5" fill="#7a827f">Foregrounds and calibration</text>
+        <text x="832" y="70" font-size="17" font-weight="600">Gaussian prior</text>
+        <text x="832" y="92" font-size="12" fill="#64796e">Three correlated coordinates</text>
+      </g>
+      <g stroke="#e0e7e2" stroke-width="1"><path d="M45 124H259 M45 157H259 M45 190H259 M45 223H259 M85 114V237 M135 114V237 M185 114V237 M235 114V237"/></g>
+      <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M47 207 C66 204 73 129 87 132 S111 203 124 192 S148 152 161 166 S184 206 197 184 S218 174 230 181 S247 190 255 187" stroke="#386e65" stroke-width="2.4"/>
+        <path d="M47 196 C66 192 76 164 87 179 S115 216 125 202 S146 180 158 191 S183 211 196 197 S230 195 255 201" stroke="#839b8f" stroke-width="1.8"/>
+      </g>
+      <text x="45" y="263" font-size="11.5" fill="#71817b">Planck · ACT · SPT</text>
+      <g stroke="#416f63" stroke-width="1.7" fill="none">
+        <path d="M278 170 H332 V98 H367" marker-end="url(#fig-arr)"/>
+        <path d="M716 98 H805" marker-end="url(#fig-arr)"/>
+      </g>
+      <path d="M332 170 V244 H368" stroke="#98a7a0" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/>
+      <circle cx="332" cy="170" r="3.5" fill="#416f63"/>
+      <text x="726" y="83" font-size="11" fill="#416f63">Retained</text>
+      <g stroke="#a7b1aa" stroke-width="1.5" fill="none"><path d="M716 243 H768" stroke-dasharray="4 4"/><path d="M779 237 l12 12 M791 237 l-12 12"/></g>
+      <text x="725" y="269" font-size="11" fill="#7e8982">Marginalized</text>
+      <g stroke="#d8e2db" stroke-width="1"><path d="M832 124 H1076 M832 177 H1076 M832 230 H1076"/></g>
+      <g font-size="15" fill="#264c43"><text x="838" y="154" class="mono">100θ*</text><text x="838" y="207" class="mono">ω<tspan baseline-shift="sub" font-size="11">b</tspan></text><text x="838" y="260" class="mono">ω<tspan baseline-shift="sub" font-size="11">bc</tspan></text></g>
+      <g font-size="12" fill="#64776f"><text x="958" y="154">Acoustic angle</text><text x="958" y="207">Baryon density</text><text x="958" y="260">Baryon + CDM</text></g>
+    </svg>
+    <svg class="diagram-mobile" viewBox="0 0 360 492" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="figure-mobile-title figure-mobile-desc">
+      <title id="figure-mobile-title">Compression of the CMB into early-universe acoustic parameters</title>
+      <desc id="figure-mobile-desc">The observed spectra constrain early-universe physics, while late-time effects are marginalized. The retained information is summarized by three Gaussian parameters.</desc>
+      <defs><marker id="fig-arr-m" markerWidth="7" markerHeight="7" refX="5.8" refY="3.5" orient="auto"><path d="M1 1 L5.5 3.5 L1 6" fill="none" stroke="#416f63" stroke-width="1.2"/></marker></defs>
+      <rect width="360" height="492" fill="#fff"/>
+      <g stroke="#ccd8d1" stroke-width="1.1" fill="none"><rect x="15" y="23" width="330" height="114" rx="2"/><rect x="15" y="176" width="156" height="139" rx="2" fill="#eff5f1"/><rect x="189" y="176" width="156" height="139" rx="2" fill="#f7f7f5" stroke-dasharray="4 4"/><rect x="15" y="355" width="330" height="115" rx="2" fill="#f9fbf9"/></g>
+      <g fill="#253c35"><text x="29" y="48" font-size="15.5" font-weight="600">Observed CMB spectra</text><text x="29" y="68" font-size="11.8" fill="#6d8176">TT · TE · EE</text></g>
+      <g stroke="#e1e8e2" stroke-width="1"><path d="M29 92H331M29 112H331"/></g>
+      <g fill="none" stroke-linecap="round"><path d="M30 119 C50 116 53 73 67 77 S92 114 107 103 S132 89 145 98 S178 121 194 106 S220 99 235 107 S274 113 330 109" stroke="#3a7166" stroke-width="2.2"/><path d="M30 113 C57 107 68 100 86 113 S126 121 145 109 S177 112 203 118 S250 114 330 117" stroke="#9baaa2" stroke-width="1.4"/></g>
+      <path d="M180 137 V151 H93 V171 M180 151 H267 V171" stroke="#93a69b" stroke-width="1.4" fill="none"/><circle cx="180" cy="151" r="2.9" fill="#587e6d"/>
+      <text x="27" y="202" font-size="14" fill="#2f5348" font-weight="600">Retain</text>
+      <text x="27" y="223" font-size="12" fill="#38594c">Early physics</text>
+      <g font-size="11.3" fill="#60786a"><text x="27" y="251">Peak positions</text><text x="27" y="271">Relative heights</text><text x="27" y="291">Damping</text></g>
+      <text x="201" y="202" font-size="14" fill="#6c7771" font-weight="600">Marginalize</text>
+      <text x="201" y="223" font-size="12" fill="#6c7771">Late-time effects</text>
+      <g font-size="11.3" fill="#7e8a82"><text x="201" y="251">Lensing · late ISW</text><text x="201" y="271">Reionization</text><text x="201" y="291">Foregrounds</text></g>
+      <path d="M93 315V346 H179 V353" fill="none" stroke="#416f63" stroke-width="1.6" marker-end="url(#fig-arr-m)"/>
+      <path d="M267 315V337" fill="none" stroke="#9baaa3" stroke-dasharray="4 4"/><path d="M262 329l10 10 M272 329l-10 10" stroke="#9baaa3" stroke-width="1.2"/>
+      <text x="29" y="378" font-size="14.5" font-weight="600" fill="#2e4e42">Three-parameter Gaussian prior</text>
+      <g font-size="15" fill="#2f6358" class="mono" text-anchor="middle"><text x="70" y="421">100θ*</text><text x="182" y="421">ω<tspan baseline-shift="sub" font-size="10">b</tspan></text><text x="291" y="421">ω<tspan baseline-shift="sub" font-size="10">bc</tspan></text></g>
+      <g stroke="#dee8e1"><path d="M130 393V447M237 393V447"/></g>
+    </svg>
+    <figcaption class="diagram-caption"><span><strong>Figure 1.</strong> Early acoustic information is retained in the three-dimensional Gaussian prior; contributions that depend on the late-time cosmology or on nuisance modeling are removed or marginalized.</span><span class="caption-formula">p(100θ*, ω<sub>b</sub>, ω<sub>bc</sub> | CMB)</span></figcaption>
+  </figure>
+</section>
+
+    <section class="container config-section" id="configurator" aria-labelledby="builder-title">
+      <div class="section-kicker">Configuration</div>
+      <h2 class="section-heading" id="builder-title">YAML configuration</h2>
+      <p class="section-desc">Choose an observation combination and parameter convention. The Cobaya YAML is generated from the selected three-dimensional prior.</p>
+      <div class="config-grid">
+        <div class="builder" aria-label="Configuration options">
+          <section class="field-card" aria-labelledby="dataset-heading">
+            <div class="field-top"><div><h3 id="dataset-heading">Observations</h3><p>Choose the CMB data combination.</p></div></div>
+            <div class="dataset-wrap">
+              <label class="sr-only" for="dataset">CMB observation combination</label>
+              <select id="dataset">
+                <option value="baseline">Planck PR4 + ACT DR6 + SPT-3G D1</option>
+                <option value="PR4">Planck PR4</option>
+                <option value="ACTDR6">ACT DR6</option>
+                <option value="SPT3GD1">SPT-3G D1</option>
+                <option value="WMAP_ACTDR6_SPT3GD1">WMAP + ACT DR6 + SPT-3G D1</option>
+                <option value="baseline_no_lowlEE">Planck + ACT + SPT (no low-ℓ EE)</option>
+              </select>
+              <svg class="select-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m4 7 6 6 6-6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg>
+            </div>
+            <p class="dataset-detail" id="dataset-detail">Baseline · primary spectra and lensing reconstruction</p>
+          </section>
+
+          <section class="field-card" aria-labelledby="angle-heading">
+            <div class="field-top"><div><h3 id="angle-heading">Acoustic angle</h3><p>Choose the Boltzmann-code convention for 100θ*.</p></div></div>
+            <div class="options" role="radiogroup" aria-labelledby="angle-heading" data-group="angle">
+              <button class="choice" role="radio" aria-checked="true" tabindex="0" type="button" data-value="thetastar"><span class="choice-text"><span class="choice-code">thetastar</span><span class="choice-info">CAMB</span></span><span class="choice-check" aria-hidden="true"></span></button>
+              <button class="choice" role="radio" aria-checked="false" tabindex="-1" type="button" data-value="theta_star_100"><span class="choice-text"><span class="choice-code">theta_star_100</span><span class="choice-info">CLASS</span></span><span class="choice-check" aria-hidden="true"></span></button>
+            </div>
+          </section>
+
+          <section class="field-card" aria-labelledby="baryon-heading">
+            <div class="field-top"><div><h3 id="baryon-heading">Baryon density</h3><p>Equivalent physical density, different naming conventions.</p></div></div>
+            <div class="options triple" role="radiogroup" aria-labelledby="baryon-heading" data-group="baryon">
+              <button class="choice" role="radio" aria-checked="true" tabindex="0" type="button" data-value="omegabh2"><span class="choice-text"><span class="choice-code">omegabh2</span><span class="choice-info">Planck convention</span></span><span class="choice-check" aria-hidden="true"></span></button>
+              <button class="choice" role="radio" aria-checked="false" tabindex="-1" type="button" data-value="ombh2"><span class="choice-text"><span class="choice-code">ombh2</span><span class="choice-info">CAMB</span></span><span class="choice-check" aria-hidden="true"></span></button>
+              <button class="choice" role="radio" aria-checked="false" tabindex="-1" type="button" data-value="omega_b"><span class="choice-text"><span class="choice-code">omega_b</span><span class="choice-info">CLASS</span></span><span class="choice-check" aria-hidden="true"></span></button>
+            </div>
+          </section>
+
+          <section class="field-card" aria-labelledby="third-heading">
+            <div class="field-top"><div><h3 id="third-heading">Matter / equality coordinate</h3><p>Choose the third coordinate of the Gaussian prior.</p></div></div>
+            <div class="third-options" role="radiogroup" aria-labelledby="third-heading" data-group="matter">
+              <div>
+                <p class="option-heading">Baryons + cold dark matter</p>
+                <div class="small-choices">
+                  <button class="choice wide" role="radio" aria-checked="true" tabindex="0" type="button" data-value="omegabh2+omegach2"><span class="choice-text"><span class="choice-code">omegabh2 + omegach2</span><span class="choice-info">Planck convention</span></span><span class="choice-check" aria-hidden="true"></span></button>
+                  <button class="choice" role="radio" aria-checked="false" tabindex="-1" type="button" data-value="ombh2+omch2"><span class="choice-text"><span class="choice-code">ombh2 + omch2</span><span class="choice-info">CAMB</span></span><span class="choice-check" aria-hidden="true"></span></button>
+                  <button class="choice" role="radio" aria-checked="false" tabindex="-1" type="button" data-value="omega_b+omega_cdm"><span class="choice-text"><span class="choice-code">omega_b + omega_cdm</span><span class="choice-info">CLASS</span></span><span class="choice-check" aria-hidden="true"></span></button>
+                </div>
+              </div>
+              <div><p class="option-heading">Matter-radiation equality</p><div class="small-choices"><button class="choice wide" role="radio" aria-checked="false" tabindex="-1" type="button" data-value="aeq"><span class="choice-text"><span class="choice-code">aeq</span><span class="choice-info">Scale factor at equality</span></span><span class="choice-check" aria-hidden="true"></span></button></div></div>
+              <div>
+                <p class="option-heading">Cold dark matter only</p>
+                <div class="small-choices">
+                  <button class="choice wide" role="radio" aria-checked="false" tabindex="-1" type="button" data-value="omegach2"><span class="choice-text"><span class="choice-code">omegach2</span><span class="choice-info">Planck convention</span></span><span class="choice-check" aria-hidden="true"></span></button>
+                  <button class="choice" role="radio" aria-checked="false" tabindex="-1" type="button" data-value="omch2"><span class="choice-text"><span class="choice-code">omch2</span><span class="choice-info">CAMB</span></span><span class="choice-check" aria-hidden="true"></span></button>
+                  <button class="choice" role="radio" aria-checked="false" tabindex="-1" type="button" data-value="omega_cdm"><span class="choice-text"><span class="choice-code">omega_cdm</span><span class="choice-info">CLASS</span></span><span class="choice-check" aria-hidden="true"></span></button>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <section class="config-result" aria-labelledby="result-title">
+          <div class="result-heading">
+            <div class="result-overline"><span class="ready-dot" aria-hidden="true"></span> Boltzmann code: <span id="code-badge">CAMB</span></div>
+            <h3 id="result-title">Cobaya YAML</h3>
+            <div class="result-summary" id="coordinate-summary">thetastar / omegabh2 / omegabh2 + omegach2</div>
+          </div>
+          <div class="toolbar">
+            <div class="file-identity"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="17" viewBox="0 0 18 20" fill="none" aria-hidden="true"><path d="M3 1.5h7.8l4.8 4.8V17a1.5 1.5 0 0 1-1.5 1.5H3A1.5 1.5 0 0 1 1.5 17V3A1.5 1.5 0 0 1 3 1.5Z" stroke="currentColor" stroke-width="1.3"/><path d="M10.8 1.5V6a.7.7 0 0 0 .7.7h4.1" stroke="currentColor" stroke-width="1.3"/></svg><span id="filename">acoustic_baseline_camb.yaml</span></div>
+            <div class="toolbar-actions">
+              <button class="icon-btn" id="download" type="button" title="Download YAML" aria-label="Download YAML"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4"/><path d="M4 17v3h16v-3"/></svg><span class="btn-text">Download</span></button>
+              <button class="icon-btn primary" id="copy" type="button" title="Copy YAML" aria-label="Copy YAML"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span class="btn-text" id="copy-text">Copy YAML</span></button>
+            </div>
+          </div>
+          <div class="code-scroll" tabindex="0" aria-label="Scroll YAML configuration preview"><pre class="language-yaml"><code id="yaml-code" class="language-yaml"></code></pre></div>
+          <div class="result-footer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-9v1" stroke-linecap="round"/></svg><span>The full Gaussian mean and covariance are embedded in this YAML. Density parameters are sampled directly; derived equality values are computed from the Boltzmann code.</span></div>
+          <span class="sr-only" role="status" aria-live="polite" id="copy-status"></span>
+        </section>
+      </div>
+    </section>
+
+    <section class="research-section" id="citation" aria-labelledby="research-title">
+      <div class="container research-content">
+        <div class="section-kicker">Publication</div>
+        <h2 class="bottom-title" id="research-title">Reference</h2>
+        <p class="bottom-copy">The data compression and its underlying assumptions are discussed in:</p>
+        <p class="bottom-copy"><span class="cite-author">K. Lodha, J.-Q. Jiang, P. Mukherjee &amp; A. Shafieloo</span><br><em>Acoustic priors from the latest cosmic microwave background data</em>.</p>
+        <div class="note-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 4h18v16H3zM7 8h10M7 12h10M7 16h6" stroke-linecap="round"/></svg><span>Data and the original Cobaya configurations are included in the CMBAcousticPrior repository. This interface preserves its core theory assumptions.</span></div>
+      </div>
+    </section>
+  </main>
+  <footer><div class="container footer-inner"><span><strong>Late-time agnostic CMB Prior</strong></span></div></footer>
+
+  <!-- Prism from CDN for YAML grammar highlighting. -->
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-yaml.min.js" defer></script>
+  <script>
+    'use strict';
+    // Source: data/*.txt in CMBAcousticPrior. Each data set contains mean(theta*, omega_b, omega_bc)
+    // and the associated 3x3 covariance. theta* in these files is in radians.
+    const DATASETS = {"ACTDR6":{"mean":[0.010408599898,0.022587532953,0.14562030155],"cov":[[1.2035284649e-11,2.1360143533e-11,-6.4797347255e-09],[2.1360143533e-11,2.7673932333e-08,-9.4181925757e-08],[-6.4797347255e-09,-9.4181925757e-08,1.0428050233e-05]]},"PR4":{"mean":[0.010410669409,0.022263013481,0.14123632689],"cov":[[6.7334086902e-12,1.6129374368e-10,-1.3354827173e-09],[1.6129374368e-10,2.490852587e-08,-1.1642635725e-07],[-1.3354827173e-09,-1.1642635725e-07,1.6492312836e-06]]},"SPT3GD1":{"mean":[0.010408712799,0.022221788736,0.14527338578],"cov":[[4.6171699641e-11,-1.4419929152e-10,-1.7864713588e-08],[-1.4419929152e-10,4.5909458589e-08,-6.3236492429e-08],[-1.7864713588e-08,-6.3236492429e-08,2.8087269992e-05]]},"WMAP_ACTDR6_SPT3GD1":{"mean":[0.010409507818,0.022494579543,0.14339736027],"cov":[[8.3341947907e-12,4.5206315724e-11,-2.9718293033e-09],[4.5206315724e-11,1.2295336805e-08,-6.4813040621e-08],[-2.9718293033e-09,-6.4813040621e-08,4.6943302003e-06]]},"baseline":{"mean":[0.010410026356,0.022439634786,0.14097667245],"cov":[[4.443427652e-12,4.1749478096e-11,-7.9866044694e-10],[4.1749478096e-11,9.8960247433e-09,-4.2218959988e-08],[-7.9866044694e-10,-4.2218959988e-08,1.221704994e-06]]},"baseline_no_lowlEE":{"mean":[0.010410030463,0.022440124422,0.14091630952],"cov":[[4.6273402595e-12,4.0189389837e-11,-8.0279766546e-10],[4.0189389837e-11,9.8664176134e-09,-3.9194983887e-08],[-8.0279766546e-10,-3.9194983887e-08,1.238379554e-06]]}};
+
+    const labels = {
+      baseline: 'Planck PR4 + ACT DR6 + SPT-3G D1',
+      PR4: 'Planck PR4',
+      ACTDR6: 'ACT DR6',
+      SPT3GD1: 'SPT-3G D1',
+      WMAP_ACTDR6_SPT3GD1: 'WMAP + ACT DR6 + SPT-3G D1',
+      baseline_no_lowlEE: 'Planck PR4 + ACT DR6 + SPT-3G D1 (no low-ℓ EE)'
+    };
+    const descriptions = {
+      baseline: 'Baseline · combined primary CMB and joint lensing reconstruction',
+      PR4: 'Planck PR4 · with low-ℓ polarization and lensing information',
+      ACTDR6: 'ACT DR6 · with low-ℓ polarization and lensing information',
+      SPT3GD1: 'SPT-3G D1 · with low-ℓ polarization and lensing information',
+      WMAP_ACTDR6_SPT3GD1: 'WMAP + ground-based ACT and SPT · combined lensing',
+      baseline_no_lowlEE: 'Baseline combination · excludes low-ℓ EE information'
+    };
+    // Standard radiation-density convention used for the currently selected aeq coordinate.
+    // T_CMB = 2.7255 K, N_eff = 3.044, and neutrinos are relativistic around equality.
+    const OMEGA_R = 2.469e-5 * (1 + (7 / 8) * Math.pow(4 / 11, 4 / 3) * 3.044);
+    const selections = { dataset: 'baseline', angle: 'thetastar', baryon: 'omegabh2', matter: 'omegabh2+omegach2' };
+    let currentYaml = '';
+    let currentFilename = '';
+
+    function sci(value) { return Number(value).toExponential(10); }
+    function matrixMul(left, right) {
+      return left.map(row => right[0].map((_, j) => row.reduce((sum, v, k) => sum + v * right[k][j], 0)));
+    }
+    function transpose(M) { return M[0].map((_, i) => M.map(row => row[i])); }
+    function transformedGaussian(dataset, matter) {
+      const mu = dataset.mean, cov = dataset.cov;
+      const kind = matter === 'aeq' ? 'aeq' : ['omegach2', 'omch2', 'omega_cdm'].includes(matter) ? 'cold' : 'total';
+      const jac = kind === 'aeq' ? -OMEGA_R / (mu[2] * mu[2]) : 0;
+      const transform = [
+        [100, 0, 0],
+        [0, 1, 0],
+        kind === 'cold' ? [0, -1, 1] : kind === 'aeq' ? [0, 0, jac] : [0, 0, 1]
+      ];
+      const outMu = [100 * mu[0], mu[1], kind === 'cold' ? mu[2] - mu[1] : kind === 'aeq' ? OMEGA_R / mu[2] : mu[2]];
+      return { mean: outMu, cov: matrixMul(matrixMul(transform, cov), transpose(transform)) };
+    }
+
+    // The selected baryon coordinate always names the baryon *sampled* parameter.
+    // The matter coordinate determines the sampled CDM name; total-density options
+    // are evaluated as sums within the likelihood (never via a derived density).
+    function selectedCDMName(baryon, matter) {
+      if (matter === 'omegach2' || matter === 'omegabh2+omegach2') return 'omegach2';
+      if (matter === 'omch2' || matter === 'ombh2+omch2') return 'omch2';
+      if (matter === 'omega_cdm' || matter === 'omega_b+omega_cdm') return 'omega_cdm';
+      // aeq does not choose a CDM notation, so follow the selected baryon notation.
+      return { omegabh2: 'omegach2', ombh2: 'omch2', omega_b: 'omega_cdm' }[baryon];
+    }
+    function thirdCoordinateLabel(baryon, matter) {
+      if (matter === 'aeq') return 'aeq';
+      if (['omegach2', 'omch2', 'omega_cdm'].includes(matter)) return matter;
+      return `${baryon} + ${selectedCDMName(baryon, matter)}`;
+    }
+    function derivedEntries(code, matter) {
+      if (matter !== 'aeq') return [];
+      const eq = code === 'camb' ? 'zeq' : 'z_eq';
+      return [
+        `  ${eq}:`,
+        String.raw`    latex: z_{\mathrm{eq}}`,
+        '  aeq:',
+        `    derived: 'lambda ${eq}: 1.0 / (1.0 + ${eq})'`,
+        String.raw`    latex: a_{\mathrm{eq}}`
+      ];
+    }
+
+    function buildYaml() {
+      const { dataset, angle, baryon, matter } = selections;
+      const code = angle === 'thetastar' ? 'camb' : 'class';
+      const selected = DATASETS[dataset];
+      const g = transformedGaussian(selected, matter);
+      const coldName = selectedCDMName(baryon, matter);
+      const eqName = code === 'camb' ? 'zeq' : 'z_eq';
+      const isEquality = matter === 'aeq';
+      const isCold = ['omegach2', 'omch2', 'omega_cdm'].includes(matter);
+      const thirdLabel = thirdCoordinateLabel(baryon, matter);
+      const requested = [angle, baryon, isEquality ? eqName : coldName];
+      const req = `{${requested.map(name => `${name}: null`).join(', ')}}`;
+      const get = name => `_self.provider.get_param('${name}')`;
+      const first = get(angle);
+      const second = get(baryon);
+      const third = isEquality
+        ? `1.0 / (1.0 + ${get(eqName)})`
+        : isCold ? get(coldName) : `${get(baryon)} + ${get(coldName)}`;
+      const mu = g.mean.map(sci).join(', ');
+      const cov = g.cov.map((row, i) => `${i === 0 ? '        np.array([[' : '                  ['}${row.map(sci).join(', ')}]${i === 2 ? '])' : ','}`).join('\n');
+      const thetaBlock = code === 'camb' ? [
+        '  theta_MC_100:',
+        '    prior: {min: 0.5, max: 10}',
+        '    ref: {dist: norm, loc: 1.0411, scale: 0.0004}',
+        '    proposal: 0.0002',
+        String.raw`    latex: 100\theta_\mathrm{MC}`,
+        '    drop: true',
+        '  cosmomc_theta:',
+        "    value: 'lambda theta_MC_100: 1.e-2*theta_MC_100'",
+        '    derived: false'
+      ] : [
+        '  theta_s_100:',
+        '    prior: {min: 0.5, max: 10}',
+        '    ref: {dist: norm, loc: 1.0419, scale: 0.0004}',
+        '    proposal: 0.0002',
+        String.raw`    latex: 100\theta_\mathrm{s}`
+      ];
+      // Cobaya already maps Planck names omegabh2/omegach2 to both solvers.
+      // Only mixed CAMB/CLASS spellings require additional theory aliases.
+      const aliases = code === 'camb'
+        ? [baryon === 'omega_b' ? '      omega_b: ombh2' : null,
+           coldName === 'omega_cdm' ? '      omega_cdm: omch2' : null].filter(Boolean)
+        : [baryon === 'ombh2' ? '      ombh2: omega_b' : null,
+           coldName === 'omch2' ? '      omch2: omega_cdm' : null].filter(Boolean);
+      const theoryBlock = code === 'camb' ? [
+        'theory:',
+        '  camb:',
+        ...(aliases.length ? ['    renames:', ...aliases] : []),
+        '    extra_args:',
+        '      theta_H0_range: [20, 100]',
+        '      # For builds with CosmoRec, uncomment:',
+        '      # recombination_model: CosmoRec'
+      ] : [
+        'theory:',
+        '  classy:',
+        ...(aliases.length ? ['    renames:', ...aliases] : []),
+        '    # Include any additional sampled CLASS parameters here.',
+        `    input_params: [theta_s_100, ${baryon}, ${coldName}]`,
+        ...(isEquality ? ['    output_params: [z_eq]'] : []),
+        '    extra_args:',
+        '      reio_parametrization: reio_none',
+        '      recombination: HyRec',
+        '      N_ncdm: 1',
+        '      m_ncdm: 0.06',
+        '      N_ur: 2.0308',
+        '      T_cmb: 2.7255',
+        '      YHe: BBN',
+        '      sBBN file: sBBN_2025_primat.dat'
+      ];
+      const lines = [
+        `# CMB Gaussian prior | ${labels[dataset]}`,
+        `# Gaussian coordinates: [${angle}, ${baryon}, ${thirdLabel}]`,
+        '# Generated for Cobaya; full 3x3 covariance included.',
+        ...theoryBlock,
+        '',
+        'likelihood:',
+        '  cmb_acoustic:',
+        '    external: |',
+        '      (lambda mean, cov: lambda _self: -0.5 *',
+        '        (lambda d: d @ np.linalg.solve(cov, d))(',
+        '          np.array([',
+        `            ${first},`,
+        `            ${second},`,
+        `            ${third}`,
+        '          ]) - mean))(',
+        `        np.array([${mu}]),`,
+        cov,
+        '      )',
+        `    requires: ${req}`,
+        '  # Add late-time likelihoods here (BAO, supernovae, etc.)',
+        '',
+        'params:',
+        ...thetaBlock,
+        `  ${baryon}:`,
+        '    prior: {min: 0.005, max: 0.1}',
+        '    ref: {dist: norm, loc: 0.0224, scale: 0.0002}',
+        '    proposal: 0.0001',
+        String.raw`    latex: \Omega_\mathrm{b} h^2`,
+        `  ${coldName}:`,
+        '    prior: {min: 0.001, max: 0.99}',
+        '    ref: {dist: norm, loc: 0.1185, scale: 0.002}',
+        '    proposal: 0.001',
+        String.raw`    latex: \Omega_\mathrm{c} h^2`,
+        ...(code === 'camb' ? ['  mnu: 0.06'] : []),
+        '  H0:',
+        String.raw`    latex: H_0`,
+        `  ${angle}:`,
+        '    derived: true',
+        String.raw`    latex: 100\theta_*`,
+        '  omegam:',
+        String.raw`    latex: \Omega_\mathrm{m}`,
+        '  rdrag:',
+        String.raw`    latex: r_\mathrm{drag}`,
+        ...derivedEntries(code, matter),
+        '',
+        'sampler:',
+        '  mcmc:',
+        '    Rminus1_stop: 0.01',
+        '    max_tries: .inf',
+        '',
+        `output: chains/acoustic_${dataset}_${code}`,
+        ''
+      ];
+      return lines.join('\n');
+    }
+
+    function basicYamlHighlight(source) {
+      // Offline fallback: Prism from the CDN takes precedence whenever available.
+      const escape = text => text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      return source.split('\n').map(line => {
+        if (/^\s*#/.test(line)) return `<span class="token comment">${escape(line)}</span>`;
+        const keyMatch = /^(\s*)([\w.-]+)(:)(\s*)(.*)$/.exec(line);
+        if (!keyMatch) return escape(line);
+        const [, space, key, colon, gap, rest] = keyMatch;
+        const value = /^(?:[-+]?\d|true$|false$|null$|\[|\{)/.test(rest.trim())
+          ? `<span class="token number">${escape(rest)}</span>`
+          : /^(?:'|")/.test(rest.trim())
+            ? `<span class="token string">${escape(rest)}</span>`
+            : escape(rest);
+        return `${space}<span class="token key">${escape(key)}</span>${colon}${gap}${value}`;
+      }).join('\n');
+    }
+
+    function render() {
+      currentYaml = buildYaml();
+      const code = selections.angle === 'thetastar' ? 'camb' : 'class';
+      currentFilename = `acoustic_${selections.dataset}_${code}.yaml`;
+      const el = document.getElementById('yaml-code');
+      el.textContent = currentYaml;
+      // Prism scripts are deferred, but can be absent/offline: always show raw YAML.
+      if (window.Prism && Prism.languages && Prism.languages.yaml) Prism.highlightElement(el);
+      else el.innerHTML = basicYamlHighlight(currentYaml);
+      document.getElementById('filename').textContent = currentFilename;
+      document.getElementById('code-badge').textContent = code.toUpperCase();
+      document.getElementById('coordinate-summary').textContent = `${selections.angle} / ${selections.baryon} / ${thirdCoordinateLabel(selections.baryon, selections.matter)}`;
+      document.getElementById('dataset-detail').textContent = descriptions[selections.dataset];
+    }
+    // Only the conventions supported by the chosen Boltzmann code remain selectable.
+    // Planck coordinates (and the shared equality coordinate) are always available.
+    const conventionByChoice = {
+      baryon: { omegabh2: 'planck', ombh2: 'camb', omega_b: 'class' },
+      matter: {
+        'omegabh2+omegach2': 'planck',
+        'ombh2+omch2': 'camb',
+        'omega_b+omega_cdm': 'class',
+        aeq: 'shared',
+        omegach2: 'planck', omch2: 'camb', omega_cdm: 'class'
+      }
+    };
+    const matchingConvention = {
+      baryon: { ombh2: 'omega_b', omega_b: 'ombh2' },
+      matter: {
+        'ombh2+omch2': 'omega_b+omega_cdm',
+        'omega_b+omega_cdm': 'ombh2+omch2',
+        omch2: 'omega_cdm', omega_cdm: 'omch2'
+      }
+    };
+    function synchronizeRadios() {
+      for (const root of document.querySelectorAll('[data-group]')) {
+        const group = root.dataset.group;
+        for (const button of root.querySelectorAll('button[role="radio"]')) {
+          const selected = button.dataset.value === selections[group];
+          button.setAttribute('aria-checked', String(selected));
+          button.tabIndex = selected && !button.disabled ? 0 : -1;
+        }
+      }
+    }
+    function applyConventionLimits() {
+      const active = selections.angle === 'thetastar' ? 'camb' : 'class';
+      for (const group of ['baryon', 'matter']) {
+        const root = document.querySelector(`[data-group="${group}"]`);
+        for (const button of root.querySelectorAll('button[role="radio"]')) {
+          const convention = conventionByChoice[group][button.dataset.value];
+          button.disabled = convention !== 'planck' && convention !== 'shared' && convention !== active;
+          button.setAttribute('aria-disabled', String(button.disabled));
+        }
+        const current = root.querySelector(`button[data-value="${selections[group]}"]`);
+        if (!current || current.disabled) {
+          const counterpart = matchingConvention[group][selections[group]];
+          const alternative = counterpart && root.querySelector(`button[data-value="${counterpart}"]`);
+          const fallback = alternative && !alternative.disabled
+            ? alternative : root.querySelector('button[role="radio"]:not(:disabled)');
+          selections[group] = fallback.dataset.value;
+        }
+      }
+      synchronizeRadios();
+    }
+    function pick(group, value) {
+      const root = document.querySelector(`[data-group="${group}"]`);
+      const button = Array.from(root.querySelectorAll('button[role="radio"]'))
+        .find(b => b.dataset.value === value);
+      if (!button || button.disabled) return;
+      selections[group] = value;
+      if (group === 'angle') applyConventionLimits();
+      else synchronizeRadios();
+      render();
+    }
+    for (const root of document.querySelectorAll('[data-group]')) {
+      const group = root.dataset.group;
+      root.addEventListener('click', e => {
+        const button = e.target.closest('button[role="radio"]');
+        if (button && root.contains(button) && !button.disabled) pick(group, button.dataset.value);
+      });
+      root.addEventListener('keydown', e => {
+        if (!['ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowUp', 'Home', 'End'].includes(e.key)) return;
+        const buttons = Array.from(root.querySelectorAll('button[role="radio"]')).filter(b => !b.disabled);
+        if (!buttons.length) return;
+        const i = buttons.findIndex(b => b.dataset.value === selections[group]);
+        const j = e.key === 'Home' ? 0 : e.key === 'End' ? buttons.length - 1
+          : (i + (['ArrowRight', 'ArrowDown'].includes(e.key) ? 1 : -1) + buttons.length) % buttons.length;
+        e.preventDefault();
+        pick(group, buttons[j].dataset.value);
+        buttons[j].focus();
+      });
+    }
+    document.getElementById('dataset').addEventListener('change', e => { selections.dataset = e.target.value; render(); });
+
+    function fallbackCopy(text) {
+      const area = document.createElement('textarea');
+      area.value = text; area.setAttribute('readonly', '');
+      area.style.position = 'fixed'; area.style.opacity = '0';
+      document.body.appendChild(area); area.select();
+      const success = document.execCommand('copy');
+      area.remove();
+      if (!success) throw new Error('Copy unavailable');
+    }
+    document.getElementById('copy').addEventListener('click', async () => {
+      const buttonLabel = document.getElementById('copy-text');
+      try {
+        if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(currentYaml);
+        else fallbackCopy(currentYaml);
+        buttonLabel.textContent = 'Copied!';
+        document.getElementById('copy-status').textContent = 'YAML copied to clipboard.';
+      } catch (error) {
+        buttonLabel.textContent = 'Copy failed';
+        document.getElementById('copy-status').textContent = 'Copy failed. Select the code and copy manually.';
+      }
+      clearTimeout(window.__copyReset);
+      window.__copyReset = setTimeout(() => { buttonLabel.textContent = 'Copy YAML'; }, 1800);
+    });
+    document.getElementById('download').addEventListener('click', () => {
+      const objectUrl = URL.createObjectURL(new Blob([currentYaml], { type: 'application/yaml;charset=utf-8' }));
+      const a = document.createElement('a'); a.href = objectUrl; a.download = currentFilename;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(objectUrl), 1500);
+      document.getElementById('copy-status').textContent = 'YAML download started.';
+    });
+    applyConventionLimits();
+    render();
+    // Prism may arrive after the initial render; retry highlighting after full load.
+    window.addEventListener('load', () => {
+      const el = document.getElementById('yaml-code');
+      if (window.Prism && Prism.languages && Prism.languages.yaml) Prism.highlightElement(el);
+    });
+  </script>
+</body>
+</html>
