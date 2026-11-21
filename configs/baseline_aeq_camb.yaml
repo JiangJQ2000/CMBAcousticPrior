@@ -1,0 +1,64 @@
+# CMB acoustic prior with CAMB, flat LCDM.
+# Run:  cobaya-run baseline_aeq_camb.yaml
+theory:
+  camb:
+    extra_args:
+      theta_H0_range: [20, 100]
+      # The prior was measured with CosmoRec recombination. If your CAMB build
+      # includes CosmoRec, uncomment the next line. With CAMB's default
+      # recombination, 100 theta_* shifts by -2.4e-5 (0.1 sigma of the baseline).
+      # recombination_model: CosmoRec
+
+likelihood:
+  # Gaussian prior on (theta_*, omega_b, a_eq), with a_eq = 1/(1 + z_eq) at matter-radiation equality.
+  # Data: Planck PR4 + ACT DR6 + SPT-3G D1 (baseline)
+  cmb_acoustic:
+    external: |
+      (lambda mean, cov: lambda _self: -0.5 * (lambda d: d @ np.linalg.solve(cov, d))(
+          np.array([_self.provider.get_param('thetastar') / 100,
+                    _self.provider.get_param('ombh2'),
+                    1 / (1 + _self.provider.get_param('zeq'))]) - mean))(
+        np.array([1.0410026356e-02, 2.2439634786e-02, 2.9670416602e-04]),
+        np.array([[4.4434276520e-12, 4.1749478096e-11, 1.6823699706e-12],
+                  [4.1749478096e-11, 9.8960247433e-09, 8.8936163742e-11],
+                  [1.6823699706e-12, 8.8936163742e-11, 5.4128273741e-12]]))
+    requires: {thetastar: null, ombh2: null, zeq: null}
+  # Add late-time likelihoods here, e.g.
+  # bao.desi_dr2.desi_bao_all:
+
+params:
+  theta_MC_100:
+    prior: {min: 0.5, max: 10}
+    ref: {dist: norm, loc: 1.0411, scale: 0.0004}
+    proposal: 0.0002
+    latex: 100\theta_\mathrm{MC}
+    drop: true
+  cosmomc_theta:
+    value: 'lambda theta_MC_100: 1.e-2*theta_MC_100'
+    derived: false
+  omegabh2:
+    prior: {min: 0.005, max: 0.1}
+    ref: {dist: norm, loc: 0.0224, scale: 0.0002}
+    proposal: 0.0001
+    latex: \Omega_\mathrm{b} h^2
+  omegach2:
+    prior: {min: 0.001, max: 0.99}
+    ref: {dist: norm, loc: 0.1185, scale: 0.002}
+    proposal: 0.001
+    latex: \Omega_\mathrm{c} h^2
+  mnu: 0.06
+  H0:
+    latex: H_0
+  thetastar:
+    latex: 100\theta_*
+  omegam:
+    latex: \Omega_\mathrm{m}
+  rdrag:
+    latex: r_\mathrm{drag}
+
+sampler:
+  mcmc:
+    Rminus1_stop: 0.01
+    max_tries: .inf
+
+output: chains/baseline_aeq_camb

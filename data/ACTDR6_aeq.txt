@@ -1,0 +1,7 @@
+# ACT DR6
+# Gaussian in (theta_star, omega_b, a_eq), a_eq = scale factor at matter-radiation equality
+# row 1: mean; rows 2-4: covariance
+1.0408599898e-02 2.2587532953e-02 2.8736642386e-04
+1.2035284649e-11 2.1360143533e-11 1.2793943409e-11
+2.1360143533e-11 2.7673932333e-08 1.8632330861e-10
+1.2793943409e-11 1.8632330861e-10 4.0696855888e-11
