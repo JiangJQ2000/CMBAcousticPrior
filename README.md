@@ -10,8 +10,8 @@ Nothing to install beyond Cobaya and a Boltzmann code. Every config contains the
 
 ```bash
 pip install cobaya camb      # or: pip install cobaya classy
-cobaya-run examples/camb_lcdm.yaml
-cobaya-run examples/class_lcdm.yaml
+cobaya-run configs/baseline_camb.yaml
+cobaya-run configs/baseline_class.yaml
 ```
 
 To add the prior to your own run, copy the `cmb_acoustic:` block from the `likelihood:` section of any config into your YAML. Use the CAMB or CLASS version to match your theory code.
