@@ -367,7 +367,7 @@ footer { padding: 20px 0 28px; border-top: 1px solid var(--line); color: #78877f
         <h2 class="bottom-title" id="research-title">Reference</h2>
         <p class="bottom-copy">The data compression and its underlying assumptions are discussed in:</p>
         <p class="bottom-copy"><span class="cite-author">K. Lodha, J.-Q. Jiang, P. Mukherjee &amp; A. Shafieloo</span><br><em>Acoustic priors from the latest cosmic microwave background data</em>.</p>
-        <div class="note-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 4h18v16H3zM7 8h10M7 12h10M7 16h6" stroke-linecap="round"/></svg><span>Data and the original Cobaya configurations are included in the CMBAcousticPrior repository. This interface preserves its core theory assumptions.</span></div>
+        <div class="note-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 4h18v16H3zM7 8h10M7 12h10M7 16h6" stroke-linecap="round"/></svg><span>Data and the original Cobaya configurations are included in the <a href="https://github.com/JiangJQ2000/CMBAcousticPrior" target="_blank" rel="noopener">CMBAcousticPrior repository</a>.</span></div>
       </div>
     </section>
   </main>
@@ -398,9 +398,8 @@ footer { padding: 20px 0 28px; border-top: 1px solid var(--line); color: #78877f
       WMAP_ACTDR6_SPT3GD1: 'WMAP + ground-based ACT and SPT · combined lensing',
       baseline_no_lowlEE: 'Baseline combination · excludes low-ℓ EE information'
     };
-    // Standard radiation-density convention used for the currently selected aeq coordinate.
-    // T_CMB = 2.7255 K, N_eff = 3.044, and neutrinos are relativistic around equality.
-    const OMEGA_R = 2.469e-5 * (1 + (7 / 8) * Math.pow(4 / 11, 4 / 3) * 3.044);
+    // Equality-coordinate means and covariances from main:data/*_aeq.txt.
+    const EQUALITY_DATASETS = {"ACTDR6":{"mean":[0.010408599898,0.022587532953,0.00028736642386],"cov":[[1.2035284649e-11,2.1360143533e-11,1.2793943409e-11],[2.1360143533e-11,2.7673932333e-08,1.8632330861e-10],[1.2793943409e-11,1.8632330861e-10,4.0696855888e-11]]},"PR4":{"mean":[0.010410669409,0.022263013481,0.00029616497303],"cov":[[6.7334086902e-12,1.6129374368e-10,2.7984395284e-12],[1.6129374368e-10,2.490852587e-08,2.4416675719e-10],[2.7984395284e-12,2.4416675719e-10,7.2530756254e-12]]},"SPT3GD1":{"mean":[0.010408712799,0.022221788736,0.00028829484968],"cov":[[4.6171699641e-11,-1.4419929152e-10,3.5537966589e-11],[-1.4419929152e-10,4.5909458589e-08,1.2430763776e-10],[3.5537966589e-11,1.2430763776e-10,1.1105481627e-10]]},"WMAP_ACTDR6_SPT3GD1":{"mean":[0.010409507818,0.022494579543,0.00029174413671],"cov":[[8.3341947907e-12,4.5206315724e-11,6.043637822e-12],[4.5206315724e-11,1.2295336805e-08,1.3180517593e-10],[6.043637822e-12,1.3180517593e-10,1.9414580851e-11]]},"baseline":{"mean":[0.010410026356,0.022439634786,0.00029670416602],"cov":[[4.443427652e-12,4.1749478096e-11,1.6823699706e-12],[4.1749478096e-11,9.8960247433e-09,8.8936163742e-11],[1.6823699706e-12,8.8936163742e-11,5.4128273741e-12]]},"baseline_no_lowlEE":{"mean":[0.010410030463,0.022440124422,0.00029683152464],"cov":[[4.6273402595e-12,4.0189389837e-11,1.6921547414e-12],[4.0189389837e-11,9.8664176134e-09,8.2558262187e-11],[1.6921547414e-12,8.2558262187e-11,5.4946484609e-12]]}};
     const selections = { dataset: 'baseline', angle: 'thetastar', baryon: 'omegabh2', matter: 'omegabh2+omegach2' };
     let currentYaml = '';
     let currentFilename = '';
@@ -411,15 +410,15 @@ footer { padding: 20px 0 28px; border-top: 1px solid var(--line); color: #78877f
     }
     function transpose(M) { return M[0].map((_, i) => M.map(row => row[i])); }
     function transformedGaussian(dataset, matter) {
-      const mu = dataset.mean, cov = dataset.cov;
+      const source = matter === 'aeq' ? EQUALITY_DATASETS[dataset] : DATASETS[dataset];
+      const mu = source.mean, cov = source.cov;
       const kind = matter === 'aeq' ? 'aeq' : ['omegach2', 'omch2', 'omega_cdm'].includes(matter) ? 'cold' : 'total';
-      const jac = kind === 'aeq' ? -OMEGA_R / (mu[2] * mu[2]) : 0;
       const transform = [
         [100, 0, 0],
         [0, 1, 0],
-        kind === 'cold' ? [0, -1, 1] : kind === 'aeq' ? [0, 0, jac] : [0, 0, 1]
+        kind === 'cold' ? [0, -1, 1] : [0, 0, 1]
       ];
-      const outMu = [100 * mu[0], mu[1], kind === 'cold' ? mu[2] - mu[1] : kind === 'aeq' ? OMEGA_R / mu[2] : mu[2]];
+      const outMu = [100 * mu[0], mu[1], kind === 'cold' ? mu[2] - mu[1] : mu[2]];
       return { mean: outMu, cov: matrixMul(matrixMul(transform, cov), transpose(transform)) };
     }
 
@@ -453,8 +452,7 @@ footer { padding: 20px 0 28px; border-top: 1px solid var(--line); color: #78877f
     function buildYaml() {
       const { dataset, angle, baryon, matter } = selections;
       const code = angle === 'thetastar' ? 'camb' : 'class';
-      const selected = DATASETS[dataset];
-      const g = transformedGaussian(selected, matter);
+      const g = transformedGaussian(dataset, matter);
       const coldName = selectedCDMName(baryon, matter);
       const eqName = code === 'camb' ? 'zeq' : 'z_eq';
       const isEquality = matter === 'aeq';
