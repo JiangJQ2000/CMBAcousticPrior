@@ -2,7 +2,7 @@
 
 A Gaussian prior on (θ<sub>*</sub>, ω<sub>b</sub>, ω<sub>bc</sub>) from the CMB that does not assume a late-time cosmology, where ω<sub>bc</sub> = ω<sub>b</sub> + ω<sub>c</sub>. Use it in place of the full CMB likelihood when you combine CMB with BAO, supernovae or other late-time data in non-standard late-time models.
 
-**Config generator.** Pick a dataset and a code, then copy the config from [the webpage](https://kushallodha.github.io/CMBAcousticPrior/).
+**Config generator.** Pick a dataset and a code, then copy the config from [the webpage](https://JiangJQ2000.github.io/CMBAcousticPrior/).
 
 ## Quick start
 
