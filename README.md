@@ -29,7 +29,7 @@ To add the prior to your own run, copy the `cmb_acoustic:` block from the `likel
 
 The means and covariances are in `data/<name>.txt`. The first row is the mean of (θ<sub>*</sub>, ω<sub>b</sub>, ω<sub>bc</sub>), with θ<sub>*</sub> in radians, not 100θ<sub>*</sub>. The next three rows are the covariance.
 
-The raw chains for the baseline dataset is available in the https://github.com/JiangJQ2000/CMBAcousticPrior/releases.
+The raw chains for the baseline dataset are available in the https://github.com/JiangJQ2000/CMBAcousticPrior/releases.
 
 ## CAMB and CLASS
 
@@ -44,4 +44,4 @@ The prior's θ<sub>*</sub> is CAMB's `thetastar`, computed with CosmoRec recombi
 
 If you use this prior, please cite:
 
-K. Lodha, J.-Q. Jiang, P. Mukherjee, A. Shafieloo, *Late-time physics agnostic priors from the cosmic microwave background*, arXiv:XXXX.XXXXX.
+K. Lodha, J.-Q. Jiang, P. Mukherjee, A. Shafieloo, *Acoustic priors from the latest cosmic microwave background data*, arXiv:XXXX.XXXXX.
