@@ -29,7 +29,7 @@ To add the prior to your own run, copy the `cmb_acoustic:` block from the `likel
 
 The means and covariances are in `data/<name>.txt`. The first row is the mean of (θ<sub>*</sub>, ω<sub>b</sub>, ω<sub>bc</sub>), with θ<sub>*</sub> in radians, not 100θ<sub>*</sub>. The next three rows are the covariance.
 
-The raw chains for the baseline dataset are available in the https://github.com/JiangJQ2000/CMBAcousticPrior/releases.
+The raw chains for the baseline dataset are available in the [release](https://github.com/JiangJQ2000/CMBAcousticPrior/releases).
 
 ## CAMB and CLASS
 
