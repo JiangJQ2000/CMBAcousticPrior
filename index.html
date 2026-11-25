@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#fafaf8">
-  <meta name="description" content="Late-time agnostic CMB Prior: an interactive three-parameter CMB Gaussian prior that retains early-universe physics while marginalizing late-time effects. Generate Cobaya YAML for CAMB or CLASS.">
-  <title>Late-time agnostic CMB Prior | YAML Configurator</title>
+  <meta name="description" content="Acoustic priors from the latest cosmic microwave background data: an interactive three-parameter CMB Gaussian prior. Generate Cobaya YAML for CAMB or CLASS.">
+  <title>Acoustic priors from the latest cosmic microwave background data | YAML Configurator</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
   <!-- YAML syntax highlighting (CDN). Content remains readable if the CDN is unavailable. -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
   <style>
@@ -30,7 +30,7 @@
 }
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 80px; }
-body { background: var(--paper); color: var(--ink); margin: 0; min-width: 320px; font: 15px/1.62 var(--body); -webkit-font-smoothing: antialiased; }
+body { background: var(--paper); color: var(--ink); margin: 0; min-width: 320px; font: 16px/1.62 var(--body); -webkit-font-smoothing: antialiased; }
 ::selection { background: #d1e7dc; color: #1f3935; }
 button, select { font: inherit; }
 button { cursor: pointer; }
@@ -40,16 +40,15 @@ button:focus-visible, select:focus-visible, a:focus-visible, .code-scroll:focus-
 h1,h2,h3,p { margin-top: 0; }
 .site-header { background: #fff; border-bottom: 1px solid var(--line); }
 .header-inner { display: flex; justify-content: space-between; align-items: center; min-height: 66px; gap: 18px; }
-.brand { color: #273d38; text-decoration: none; font-size: 15px; font-weight: 600; letter-spacing: -.018em; }
+.brand { color: #273d38; text-decoration: none; font-size: 16px; font-weight: 600; letter-spacing: -.018em; }
 .brand:hover { color: var(--accent); }
-.site-nav { display: flex; align-items: center; gap: 28px; font-size: 13px; color: #5a6b66; }
+.site-nav { display: flex; align-items: center; gap: 28px; font-size: 14px; color: #5a6b66; }
 .site-nav a { text-decoration: none; border-bottom: 1px solid transparent; padding: 4px 0; }
 .site-nav a:hover { color: var(--accent); border-color: var(--accent); }
 .site-nav .nav-pill { color: #315f58; border-bottom: 1px solid #8fb6a5; }
 .hero { padding-top: 69px; }
 .hero-head { max-width: 900px; margin-bottom: 34px; }
-.eyebrow { display: block; text-transform: none; font-size: 12px; letter-spacing: .025em; font-weight: 600; color: var(--accent); margin-bottom: 17px; }
-h1 { font: 500 clamp(40px, 4.4vw, 58px)/1.14 var(--display); letter-spacing: -.025em; margin-bottom: 21px; }
+h1 { font: 500 44px/1.14 var(--display); letter-spacing: -.025em; margin-bottom: 21px; }
 .hero-lead { margin: 0; max-width: 805px; color: #4c5e5b; font-size: 16px; line-height: 1.75; }
 .hero-lead strong { color: #2c4640; font-weight: 600; }
 .astro-figure { margin: 0; background: #fff; border: 1px solid var(--line); border-radius: 3px; overflow: hidden; }
@@ -57,27 +56,22 @@ h1 { font: 500 clamp(40px, 4.4vw, 58px)/1.14 var(--display); letter-spacing: -.0
 .diagram-svg { display: block; width: 100%; height: auto; }
 .diagram-mobile { display: none; }
 .diagram-svg text, .diagram-mobile text { font-family: var(--body); }
-.diagram-svg .mono, .diagram-mobile .mono { font-family: var(--mono); }
-.diagram-caption { padding: 13px 19px; border-top: 1px solid var(--line); color: #5c6d68; font-size: 12.5px; display: flex; gap: 16px; justify-content: space-between; align-items: start; }
-.diagram-caption strong { color: #314a42; font-weight: 600; }
-.diagram-caption .caption-formula { font: 11.5px/1.5 var(--mono); color: #5a706a; white-space: nowrap; }
+.diagram-svg .math, .diagram-mobile .math { font-family: var(--display); }
 .config-section { padding-top: 80px; padding-bottom: 88px; }
-.section-kicker { color: var(--accent); font-size: 12px; font-weight: 600; margin-bottom: 10px; letter-spacing: .015em; }
-.section-heading { font: 500 clamp(30px, 3.25vw, 40px)/1.19 var(--display); letter-spacing: -.016em; margin: 0 0 8px; }
+.section-heading { font: 500 28px/1.19 var(--display); letter-spacing: -.016em; margin: 0 0 8px; }
 .section-desc { color: var(--muted); font-size: 14px; margin: 0 0 27px; }
 .config-grid { display: grid; grid-template-columns: minmax(340px, .92fr) minmax(0, 1.08fr); gap: 33px; align-items: start; }
 .builder { border: 1px solid var(--line); background: var(--white); border-radius: 3px; }
 .field-card { padding: 20px 23px 24px; border-bottom: 1px solid var(--line); }
 .field-card:last-child { border-bottom: 0; }
 .field-top { margin-bottom: 15px; }
-.field-top h3 { font-weight: 600; font-size: 15px; line-height: 1.4; margin: 0 0 2px; }
-.field-top p { margin: 0; color: #71827d; font-size: 12.5px; line-height: 1.4; }
+.field-top h3 { font-weight: 600; font-size: 16px; line-height: 1.4; margin: 0 0 2px; }
 .step-index { display: none; }
 .dataset-wrap { position: relative; }
-select { appearance: none; border: 1px solid #bdcac3; border-radius: 3px; background: #fff; color: #263b36; width: 100%; height: 43px; padding: 0 39px 0 12px; font-size: 12.8px; }
+select { appearance: none; border: 1px solid #bdcac3; border-radius: 3px; background: #fff; color: #263b36; width: 100%; height: 43px; padding: 0 39px 0 12px; font-size: 14px; }
 select:hover, select:focus { border-color: var(--accent); }
 .select-chevron { position: absolute; right: 13px; top: 12px; width: 17px; pointer-events: none; color: #607b72; }
-.dataset-detail { margin: 10px 0 0; color: #73837e; font-size: 11.7px; }
+.dataset-detail { margin: 10px 0 0; color: #73837e; font-size: 12px; }
 .options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
 .options.triple { grid-template-columns: 1fr; }
 .choice { width: 100%; min-width: 0; min-height: 54px; padding: 10px 13px; text-align: left; display: flex; align-items: center; justify-content: space-between; gap: 8px; border: 1px solid #d5ded8; border-radius: 3px; background: #fff; color: #40534c; transition: border-color .12s ease, background-color .12s ease; }
@@ -86,51 +80,50 @@ select:hover, select:focus { border-color: var(--accent); }
 .choice:disabled { cursor: not-allowed; color: #a3aca7; background: #f9faf9; border-color: #e8ece9; }
 .choice:disabled .choice-info { color: #b2bab5; }
 .choice-text { display: block; min-width: 0; }
-.choice-code { display: block; font: 500 11.7px/1.45 var(--mono); letter-spacing: -.025em; overflow-wrap: anywhere; }
-.choice-info { display: block; font-size: 10.8px; line-height: 1.3; color: #758880; margin-top: 3px; }
+.choice-code { display: block; font: 500 12px/1.45 var(--mono); letter-spacing: -.025em; overflow-wrap: anywhere; }
+.choice-info { display: block; font-size: 12px; line-height: 1.3; color: #758880; margin-top: 3px; }
 .choice-check { flex-shrink: 0; display: inline-block; height: 13px; width: 13px; border: 1px solid #9fb2a9; border-radius: 50%; }
 .choice[aria-checked="true"] .choice-check { border: 4px solid var(--accent); background: #fff; }
 .choice:disabled .choice-check { border-color: #cfd8d1; }
-.option-heading { color: #6c7d77; font-size: 11px; font-weight: 600; text-transform: none; letter-spacing: .015em; margin: 0 0 9px; }
+.option-heading { color: #6c7d77; font-size: 12px; font-weight: 600; text-transform: none; letter-spacing: .015em; margin: 0 0 9px; }
 .third-options { display: grid; gap: 21px; }
 .small-choices { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; }
 .small-choices .choice { min-height: 52px; }
-.small-choices .choice-code { font-size: 10.7px; }
 .small-choices .choice.wide { grid-column: 1 / -1; }
 .config-result { background: #fff; border: 1px solid var(--line); border-radius: 3px; overflow: hidden; position: sticky; top: 15px; }
 .result-heading { background: #fff; padding: 19px 21px 18px; border-bottom: 1px solid var(--line); }
-.result-overline { color: #52756a; font-size: 11px; font-weight: 600; }
+.result-overline { color: #52756a; font-size: 12px; font-weight: 600; }
 .ready-dot { display: none; }
-.result-heading h3 { font: 500 25px/1.3 var(--display); letter-spacing: -.01em; margin: 6px 0 6px; }
-.result-summary { color: #778680; font: 11px/1.5 var(--mono); overflow-wrap: anywhere; }
+.result-heading h3 { font: 500 28px/1.3 var(--display); letter-spacing: -.01em; margin: 6px 0 6px; }
+.result-summary { color: #778680; font: 12px/1.5 var(--mono); overflow-wrap: anywhere; }
 .toolbar { min-height: 51px; padding: 9px 12px 9px 20px; display: flex; justify-content: space-between; align-items: center; gap: 10px; background: #f5f7f4; border-bottom: 1px solid var(--line); }
-.file-identity { display: flex; align-items: center; gap: 9px; color: #536a60; font: 11px var(--mono); min-width: 0; }
+.file-identity { display: flex; align-items: center; gap: 9px; color: #536a60; font: 12px var(--mono); min-width: 0; }
 .file-identity svg { flex-shrink: 0; }
 #filename { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .toolbar-actions { display: flex; gap: 6px; flex-shrink: 0; }
-.icon-btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 34px; border: 1px solid #bbc9c1; border-radius: 3px; padding: 0 10px; background: #fff; color: #38574e; font-size: 11px; font-weight: 600; }
+.icon-btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 34px; border: 1px solid #bbc9c1; border-radius: 3px; padding: 0 10px; background: #fff; color: #38574e; font-size: 12px; font-weight: 600; }
 .icon-btn:hover { border-color: var(--accent); color: #184c3f; }
 .icon-btn.primary { background: #315e55; border-color: #315e55; color: #fff; }
 .icon-btn.primary:hover { background: #234c45; }
 .icon-btn svg { width: 14px; height: 14px; }
 .code-scroll { overflow: auto; max-height: 690px; min-height: 515px; background: #1f282c; scrollbar-color: #72837a transparent; }
 /* Prism highlighting remains loaded from the CDN. */
-pre[class*="language-"] { margin: 0 !important; padding: 21px 23px 24px !important; border: none !important; border-radius: 0 !important; background: #1f282c !important; overflow: visible !important; text-shadow: none !important; font: 11.2px/1.78 var(--mono) !important; tab-size: 2; }
+pre[class*="language-"] { margin: 0 !important; padding: 21px 23px 24px !important; border: none !important; border-radius: 0 !important; background: #1f282c !important; overflow: visible !important; text-shadow: none !important; font: 12px/1.78 var(--mono) !important; tab-size: 2; }
 pre[class*="language-"] code[class*="language-"] { white-space: pre !important; background: transparent !important; color: #e7eae6; text-shadow: none !important; font: inherit !important; }
 .token.comment { color: #a0b0a5 !important; }
 .token.key, .token.atrule, .token.property { color: #acdccb !important; }
 .token.string, .token.scalar { color: #e8cc9e !important; }
 .token.number, .token.boolean { color: #cfc3ec !important; }
-.result-footer { display: flex; align-items: start; gap: 8px; color: #667771; padding: 12px 20px 15px; font-size: 11.7px; line-height: 1.5; background: #fff; border-top: 1px solid var(--line); }
+.result-footer { display: flex; align-items: start; gap: 8px; color: #667771; padding: 12px 20px 15px; font-size: 12px; line-height: 1.5; background: #fff; border-top: 1px solid var(--line); }
 .result-footer svg { flex-shrink: 0; width: 14px; height: 14px; color: #5b796e; margin-top: 1px; }
 .research-section { border-top: 1px solid var(--line); padding: 48px 0 62px; background: #fff; }
 .research-content { max-width: 1160px; }
-.bottom-title { font: 500 29px/1.3 var(--display); letter-spacing: -.015em; margin: 6px 0 13px; }
-.bottom-copy { color: #586b63; max-width: 770px; font-size: 13.7px; line-height: 1.7; margin: 0 0 13px; }
+.bottom-title { font: 500 28px/1.3 var(--display); letter-spacing: -.015em; margin: 6px 0 13px; }
+.bottom-copy { color: #586b63; max-width: 770px; font-size: 16px; line-height: 1.7; margin: 0 0 13px; }
 .cite-author { color: #304a42; }
 .note-inline { color: #6e8076; font-size: 12px; max-width: 790px; margin-top: 16px; }
 .note-inline svg { display: none; }
-footer { padding: 20px 0 28px; border-top: 1px solid var(--line); color: #78877f; font-size: 11.5px; background: #fff; }
+footer { padding: 20px 0 28px; border-top: 1px solid var(--line); color: #78877f; font-size: 12px; background: #fff; }
 .footer-inner { display: flex; justify-content: space-between; gap: 15px; }
 .footer-inner strong { font-weight: 500; }
 [hidden] { display: none !important; }
@@ -140,12 +133,10 @@ footer { padding: 20px 0 28px; border-top: 1px solid var(--line); color: #78877f
   .config-grid { gap: 20px; grid-template-columns: minmax(300px,.91fr) minmax(0,1.09fr); }
   .field-card { padding: 18px; }
   .choice { padding: 9px 10px; }
-  .small-choices .choice-code { font-size: 10px; }
 }
 @media (max-width: 800px) {
   .hero { padding-top: 46px; }
-  h1 { font-size: clamp(37px, 6vw, 49px); }
-  .hero-lead { font-size: 15px; }
+  h1 { font-size: clamp(36px, 6vw, 44px); }
   .diagram-svg { display: none; }
   .diagram-mobile { display: block; width: min(100%, 540px); margin: 0 auto; height: auto; }
   .config-grid { grid-template-columns: 1fr; }
@@ -157,28 +148,22 @@ footer { padding: 20px 0 28px; border-top: 1px solid var(--line); color: #78877f
 @media (max-width: 560px) {
   .container { width: calc(100% - 32px); }
   .header-inner { min-height: 62px; }
-  .brand { font-size: 12.5px; }
-  .site-nav { gap: 14px; font-size: 11px; }
+  .brand { font-size: 14px; }
+  .site-nav { gap: 14px; font-size: 12px; }
   .site-nav a:not(.nav-pill) { display: none; }
   .hero { padding-top: 39px; }
-  .eyebrow { font-size: 11px; }
-  h1 { font-size: 37px; line-height: 1.16; margin-bottom: 16px; }
+  h1 { font-size: 36px; line-height: 1.16; margin-bottom: 16px; }
   .hero-head { margin-bottom: 26px; }
-  .hero-lead { font-size: 14px; }
-  .diagram-caption { display: block; padding: 12px 14px; }
-  .diagram-caption .caption-formula { display: block; margin-top: 7px; }
   .config-section { padding-top: 55px; padding-bottom: 56px; }
   .field-card { padding: 17px 15px 19px; }
-  .section-desc { font-size: 13px; }
   .options.triple { grid-template-columns: 1fr; }
   .small-choices { grid-template-columns: 1fr; }
   .small-choices .choice.wide { grid-column: auto; }
-  .small-choices .choice-code { font-size: 11.7px; }
   .toolbar { padding: 9px 10px; }
   .icon-btn { padding-inline: 9px; }
   .icon-btn .btn-text { display: none; }
   .code-scroll { min-height: 410px; max-height: 530px; }
-  pre[class*="language-"] { padding: 17px !important; font-size: 10.5px !important; }
+  pre[class*="language-"] { padding: 17px !important; font-size: 12px !important; }
   .research-section { padding: 38px 0 50px; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -190,10 +175,11 @@ footer { padding: 20px 0 28px; border-top: 1px solid var(--line); color: #78877f
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="#top">Acoustic priors from the latest cosmic microwave background data</a>
+      <a class="brand" href="#top">CMB acoustic prior</a>
       <nav class="site-nav" aria-label="Site navigation">
         <a href="#overview">Overview</a>
-        <a href="#citation">Reference</a>
+        <a href="#citation">Citation</a>
+        <a href="https://github.com/JiangJQ2000/CMBAcousticPrior" target="_blank" rel="noopener">GitHub</a>
         <a class="nav-pill" href="#configurator">Configure</a>
       </nav>
     </div>
@@ -202,11 +188,10 @@ footer { padding: 20px 0 28px; border-top: 1px solid var(--line); color: #78877f
   <main id="top">
     <section class="container hero" id="overview" aria-labelledby="hero-title">
   <div class="hero-head">
-    <div class="eyebrow">CMB compression &amp; Gaussian distance priors</div>
     <h1 id="hero-title">Acoustic priors from the latest cosmic microwave background data</h1>
-    <p class="hero-lead">The acoustic features of the CMB constrain the angular sound horizon and the physical baryon and cold-dark-matter densities. This prior retains those three correlated quantities while removing or marginalizing the late-time contributions to the observed spectra.</p>
+    <p class="hero-lead">The acoustic features of the CMB constrain the angular sound horizon and the physical baryon and total matter densities. This prior retains those three correlated quantities without assuming a late-time cosmology.</p>
   </div>
-  <figure class="astro-figure" aria-label="Diagram of late-time agnostic CMB compression">
+  <figure class="astro-figure" aria-label="Diagram of CMB acoustic compression">
     <svg class="diagram-svg" viewBox="0 0 1120 338" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="figure-title figure-description">
       <title id="figure-title">Retaining pre-recombination acoustic information while marginalizing late-time effects</title>
       <desc id="figure-description">Observed CMB spectra are separated into early acoustic information retained in a Gaussian prior on three parameters, and late-time effects and nuisance contributions that are marginalized or removed.</desc>
@@ -221,15 +206,15 @@ footer { padding: 20px 0 28px; border-top: 1px solid var(--line); color: #78877f
         <rect x="813" y="40" width="283" height="261" rx="2" fill="#f9fbf9"/>
       </g>
       <g fill="#273e37">
-        <text x="45" y="70" font-size="17" font-weight="600">Observed CMB</text>
-        <text x="45" y="89" font-size="11.5" fill="#75857b">TT · TE · EE spectra</text>
-        <text x="395" y="68" font-size="17" font-weight="600">Early acoustic information</text>
-        <text x="395" y="91" font-size="12.5" fill="#50675d">Peak positions, relative heights and damping</text>
-        <text x="395" y="116" font-size="12.5" fill="#50675d">Set by pre-recombination physics</text>
+        <text x="45" y="70" font-size="16" font-weight="600">Observed CMB</text>
+        <text x="45" y="89" font-size="12" fill="#75857b">TT · TE · EE spectra</text>
+        <text x="395" y="68" font-size="16" font-weight="600">Early acoustic information</text>
+        <text x="395" y="91" font-size="12" fill="#50675d">Peak positions, relative heights and damping</text>
+        <text x="395" y="116" font-size="12" fill="#50675d">Set by pre-recombination physics</text>
         <text x="395" y="214" font-size="16" font-weight="600" fill="#636e69">Late-time / nuisance effects</text>
-        <text x="395" y="237" font-size="12.5" fill="#7a827f">Lensing, late ISW, reionization</text>
-        <text x="395" y="259" font-size="12.5" fill="#7a827f">Foregrounds and calibration</text>
-        <text x="832" y="70" font-size="17" font-weight="600">Gaussian prior</text>
+        <text x="395" y="237" font-size="12" fill="#7a827f">Lensing, late ISW, reionization</text>
+        <text x="395" y="259" font-size="12" fill="#7a827f">Foregrounds and calibration</text>
+        <text x="832" y="70" font-size="16" font-weight="600">Gaussian prior</text>
         <text x="832" y="92" font-size="12" fill="#64796e">Three correlated coordinates</text>
       </g>
       <g stroke="#e0e7e2" stroke-width="1"><path d="M45 124H259 M45 157H259 M45 190H259 M45 223H259 M85 114V237 M135 114V237 M185 114V237 M235 114V237"/></g>
@@ -237,18 +222,18 @@ footer { padding: 20px 0 28px; border-top: 1px solid var(--line); color: #78877f
         <path d="M47 207 C66 204 73 129 87 132 S111 203 124 192 S148 152 161 166 S184 206 197 184 S218 174 230 181 S247 190 255 187" stroke="#386e65" stroke-width="2.4"/>
         <path d="M47 196 C66 192 76 164 87 179 S115 216 125 202 S146 180 158 191 S183 211 196 197 S230 195 255 201" stroke="#839b8f" stroke-width="1.8"/>
       </g>
-      <text x="45" y="263" font-size="11.5" fill="#71817b">Planck · ACT · SPT</text>
+      <text x="45" y="263" font-size="12" fill="#71817b">Planck · ACT · SPT</text>
       <g stroke="#416f63" stroke-width="1.7" fill="none">
         <path d="M278 170 H332 V98 H367" marker-end="url(#fig-arr)"/>
         <path d="M716 98 H805" marker-end="url(#fig-arr)"/>
       </g>
       <path d="M332 170 V244 H368" stroke="#98a7a0" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/>
       <circle cx="332" cy="170" r="3.5" fill="#416f63"/>
-      <text x="726" y="83" font-size="11" fill="#416f63">Retained</text>
+      <text x="726" y="83" font-size="12" fill="#416f63">Retained</text>
       <g stroke="#a7b1aa" stroke-width="1.5" fill="none"><path d="M716 243 H768" stroke-dasharray="4 4"/><path d="M779 237 l12 12 M791 237 l-12 12"/></g>
-      <text x="725" y="269" font-size="11" fill="#7e8982">Marginalized</text>
+      <text x="725" y="269" font-size="12" fill="#7e8982">Marginalized</text>
       <g stroke="#d8e2db" stroke-width="1"><path d="M832 124 H1076 M832 177 H1076 M832 230 H1076"/></g>
-      <g font-size="15" fill="#264c43"><text x="838" y="154" class="mono">100θ*</text><text x="838" y="207" class="mono">ω<tspan baseline-shift="sub" font-size="11">b</tspan></text><text x="838" y="260" class="mono">ω<tspan baseline-shift="sub" font-size="11">bc</tspan></text></g>
+      <g font-size="16" fill="#264c43"><text x="838" y="154" class="math">100<tspan font-style="italic">θ</tspan><tspan baseline-shift="sub" font-size="12" font-style="normal">⋆</tspan></text><text x="838" y="207" class="math"><tspan font-style="italic">ω</tspan><tspan baseline-shift="sub" font-size="12" font-style="normal">b</tspan></text><text x="838" y="260" class="math"><tspan font-style="italic">ω</tspan><tspan baseline-shift="sub" font-size="12" font-style="normal">bc</tspan></text></g>
       <g font-size="12" fill="#64776f"><text x="958" y="154">Acoustic angle</text><text x="958" y="207">Baryon density</text><text x="958" y="260">Baryon + CDM</text></g>
     </svg>
     <svg class="diagram-mobile" viewBox="0 0 360 492" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="figure-mobile-title figure-mobile-desc">
@@ -257,34 +242,32 @@ footer { padding: 20px 0 28px; border-top: 1px solid var(--line); color: #78877f
       <defs><marker id="fig-arr-m" markerWidth="7" markerHeight="7" refX="5.8" refY="3.5" orient="auto"><path d="M1 1 L5.5 3.5 L1 6" fill="none" stroke="#416f63" stroke-width="1.2"/></marker></defs>
       <rect width="360" height="492" fill="#fff"/>
       <g stroke="#ccd8d1" stroke-width="1.1" fill="none"><rect x="15" y="23" width="330" height="114" rx="2"/><rect x="15" y="176" width="156" height="139" rx="2" fill="#eff5f1"/><rect x="189" y="176" width="156" height="139" rx="2" fill="#f7f7f5" stroke-dasharray="4 4"/><rect x="15" y="355" width="330" height="115" rx="2" fill="#f9fbf9"/></g>
-      <g fill="#253c35"><text x="29" y="48" font-size="15.5" font-weight="600">Observed CMB spectra</text><text x="29" y="68" font-size="11.8" fill="#6d8176">TT · TE · EE</text></g>
+      <g fill="#253c35"><text x="29" y="48" font-size="16" font-weight="600">Observed CMB spectra</text><text x="29" y="68" font-size="12" fill="#6d8176">TT · TE · EE</text></g>
       <g stroke="#e1e8e2" stroke-width="1"><path d="M29 92H331M29 112H331"/></g>
       <g fill="none" stroke-linecap="round"><path d="M30 119 C50 116 53 73 67 77 S92 114 107 103 S132 89 145 98 S178 121 194 106 S220 99 235 107 S274 113 330 109" stroke="#3a7166" stroke-width="2.2"/><path d="M30 113 C57 107 68 100 86 113 S126 121 145 109 S177 112 203 118 S250 114 330 117" stroke="#9baaa2" stroke-width="1.4"/></g>
       <path d="M180 137 V151 H93 V171 M180 151 H267 V171" stroke="#93a69b" stroke-width="1.4" fill="none"/><circle cx="180" cy="151" r="2.9" fill="#587e6d"/>
       <text x="27" y="202" font-size="14" fill="#2f5348" font-weight="600">Retain</text>
       <text x="27" y="223" font-size="12" fill="#38594c">Early physics</text>
-      <g font-size="11.3" fill="#60786a"><text x="27" y="251">Peak positions</text><text x="27" y="271">Relative heights</text><text x="27" y="291">Damping</text></g>
+      <g font-size="12" fill="#60786a"><text x="27" y="251">Peak positions</text><text x="27" y="271">Relative heights</text><text x="27" y="291">Damping</text></g>
       <text x="201" y="202" font-size="14" fill="#6c7771" font-weight="600">Marginalize</text>
       <text x="201" y="223" font-size="12" fill="#6c7771">Late-time effects</text>
-      <g font-size="11.3" fill="#7e8a82"><text x="201" y="251">Lensing · late ISW</text><text x="201" y="271">Reionization</text><text x="201" y="291">Foregrounds</text></g>
+      <g font-size="12" fill="#7e8a82"><text x="201" y="251">Lensing · late ISW</text><text x="201" y="271">Reionization</text><text x="201" y="291">Foregrounds</text></g>
       <path d="M93 315V346 H179 V353" fill="none" stroke="#416f63" stroke-width="1.6" marker-end="url(#fig-arr-m)"/>
       <path d="M267 315V337" fill="none" stroke="#9baaa3" stroke-dasharray="4 4"/><path d="M262 329l10 10 M272 329l-10 10" stroke="#9baaa3" stroke-width="1.2"/>
-      <text x="29" y="378" font-size="14.5" font-weight="600" fill="#2e4e42">Three-parameter Gaussian prior</text>
-      <g font-size="15" fill="#2f6358" class="mono" text-anchor="middle"><text x="70" y="421">100θ*</text><text x="182" y="421">ω<tspan baseline-shift="sub" font-size="10">b</tspan></text><text x="291" y="421">ω<tspan baseline-shift="sub" font-size="10">bc</tspan></text></g>
+      <text x="29" y="378" font-size="16" font-weight="600" fill="#2e4e42">Three-parameter Gaussian prior</text>
+      <g font-size="16" fill="#2f6358" text-anchor="middle"><text x="70" y="421" class="math">100<tspan font-style="italic">θ</tspan><tspan baseline-shift="sub" font-size="12" font-style="normal">⋆</tspan></text><text x="182" y="421" class="math"><tspan font-style="italic">ω</tspan><tspan baseline-shift="sub" font-size="12" font-style="normal">b</tspan></text><text x="291" y="421" class="math"><tspan font-style="italic">ω</tspan><tspan baseline-shift="sub" font-size="12" font-style="normal">bc</tspan></text></g>
       <g stroke="#dee8e1"><path d="M130 393V447M237 393V447"/></g>
     </svg>
-    <figcaption class="diagram-caption"><span><strong>Figure 1.</strong> Early acoustic information is retained in the three-dimensional Gaussian prior; contributions that depend on the late-time cosmology or on nuisance modeling are removed or marginalized.</span><span class="caption-formula">p(100θ*, ω<sub>b</sub>, ω<sub>bc</sub> | CMB)</span></figcaption>
   </figure>
 </section>
 
     <section class="container config-section" id="configurator" aria-labelledby="builder-title">
-      <div class="section-kicker">Configuration</div>
       <h2 class="section-heading" id="builder-title">YAML configuration</h2>
-      <p class="section-desc">Choose an observation combination and parameter convention. The Cobaya YAML is generated from the selected three-dimensional prior.</p>
+      <p class="section-desc">Pick the CMB data and the parameter names your code uses.</p>
       <div class="config-grid">
         <div class="builder" aria-label="Configuration options">
           <section class="field-card" aria-labelledby="dataset-heading">
-            <div class="field-top"><div><h3 id="dataset-heading">Observations</h3><p>Choose the CMB data combination.</p></div></div>
+            <div class="field-top"><h3 id="dataset-heading">Observations</h3></div>
             <div class="dataset-wrap">
               <label class="sr-only" for="dataset">CMB observation combination</label>
               <select id="dataset">
@@ -301,7 +284,7 @@ footer { padding: 20px 0 28px; border-top: 1px solid var(--line); color: #78877f
           </section>
 
           <section class="field-card" aria-labelledby="angle-heading">
-            <div class="field-top"><div><h3 id="angle-heading">Acoustic angle</h3><p>Choose the Boltzmann-code convention for 100θ*.</p></div></div>
+            <div class="field-top"><h3 id="angle-heading">Acoustic angle</h3></div>
             <div class="options" role="radiogroup" aria-labelledby="angle-heading" data-group="angle">
               <button class="choice" role="radio" aria-checked="true" tabindex="0" type="button" data-value="thetastar"><span class="choice-text"><span class="choice-code">thetastar</span><span class="choice-info">CAMB</span></span><span class="choice-check" aria-hidden="true"></span></button>
               <button class="choice" role="radio" aria-checked="false" tabindex="-1" type="button" data-value="theta_star_100"><span class="choice-text"><span class="choice-code">theta_star_100</span><span class="choice-info">CLASS</span></span><span class="choice-check" aria-hidden="true"></span></button>
@@ -309,7 +292,7 @@ footer { padding: 20px 0 28px; border-top: 1px solid var(--line); color: #78877f
           </section>
 
           <section class="field-card" aria-labelledby="baryon-heading">
-            <div class="field-top"><div><h3 id="baryon-heading">Baryon density</h3><p>Equivalent physical density, different naming conventions.</p></div></div>
+            <div class="field-top"><h3 id="baryon-heading">Baryon density</h3></div>
             <div class="options triple" role="radiogroup" aria-labelledby="baryon-heading" data-group="baryon">
               <button class="choice" role="radio" aria-checked="true" tabindex="0" type="button" data-value="omegabh2"><span class="choice-text"><span class="choice-code">omegabh2</span><span class="choice-info">Planck convention</span></span><span class="choice-check" aria-hidden="true"></span></button>
               <button class="choice" role="radio" aria-checked="false" tabindex="-1" type="button" data-value="ombh2"><span class="choice-text"><span class="choice-code">ombh2</span><span class="choice-info">CAMB</span></span><span class="choice-check" aria-hidden="true"></span></button>
@@ -318,7 +301,7 @@ footer { padding: 20px 0 28px; border-top: 1px solid var(--line); color: #78877f
           </section>
 
           <section class="field-card" aria-labelledby="third-heading">
-            <div class="field-top"><div><h3 id="third-heading">Matter / equality coordinate</h3><p>Choose the third coordinate of the Gaussian prior.</p></div></div>
+            <div class="field-top"><h3 id="third-heading">Third parameter</h3></div>
             <div class="third-options" role="radiogroup" aria-labelledby="third-heading" data-group="matter">
               <div>
                 <p class="option-heading">Baryons + cold dark matter</p>
@@ -355,7 +338,7 @@ footer { padding: 20px 0 28px; border-top: 1px solid var(--line); color: #78877f
             </div>
           </div>
           <div class="code-scroll" tabindex="0" aria-label="Scroll YAML configuration preview"><pre class="language-yaml"><code id="yaml-code" class="language-yaml"></code></pre></div>
-          <div class="result-footer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-9v1" stroke-linecap="round"/></svg><span>The full Gaussian mean and covariance are embedded in this YAML. Density parameters are sampled directly; derived equality values are computed from the Boltzmann code.</span></div>
+          <div class="result-footer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-9v1" stroke-linecap="round"/></svg><span>The YAML contains the full likelihood, including the mean and covariance.</span></div>
           <span class="sr-only" role="status" aria-live="polite" id="copy-status"></span>
         </section>
       </div>
@@ -363,15 +346,15 @@ footer { padding: 20px 0 28px; border-top: 1px solid var(--line); color: #78877f
 
     <section class="research-section" id="citation" aria-labelledby="research-title">
       <div class="container research-content">
-        <div class="section-kicker">Publication</div>
-        <h2 class="bottom-title" id="research-title">Reference</h2>
-        <p class="bottom-copy">The data compression and its underlying assumptions are discussed in:</p>
-        <p class="bottom-copy"><span class="cite-author">K. Lodha, J.-Q. Jiang, P. Mukherjee &amp; A. Shafieloo</span><br><em>Acoustic priors from the latest cosmic microwave background data</em>.</p>
-        <div class="note-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 4h18v16H3zM7 8h10M7 12h10M7 16h6" stroke-linecap="round"/></svg><span>Data and the original Cobaya configurations are included in the <a href="https://github.com/JiangJQ2000/CMBAcousticPrior" target="_blank" rel="noopener">CMBAcousticPrior repository</a>.</span></div>
+        <h2 class="bottom-title" id="research-title">Citation</h2>
+        <p class="bottom-copy">If you use this prior, please cite:</p>
+        <p class="bottom-copy"><span class="cite-author">K. Lodha, J.-Q. Jiang, P. Mukherjee, A. Shafieloo</span><br><em>Acoustic priors from the latest cosmic microwave background data</em>.</p>
+        <div class="note-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 4h18v16H3zM7 8h10M7 12h10M7 16h6" stroke-linecap="round"/></svg><span>The data, Cobaya configurations and baseline chains are in the <a href="https://github.com/JiangJQ2000/CMBAcousticPrior" target="_blank" rel="noopener">CMBAcousticPrior repository</a>.</span></div>
+        <!-- Add the arXiv ID here once the paper is announced. -->
       </div>
     </section>
   </main>
-  <footer><div class="container footer-inner"><span><strong>Late-time agnostic CMB Prior</strong></span></div></footer>
+  <footer><div class="container footer-inner"><span><strong>Acoustic priors from the latest cosmic microwave background data</strong></span></div></footer>
 
   <!-- Prism from CDN for YAML grammar highlighting. -->
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js" defer></script>
@@ -508,6 +491,7 @@ footer { padding: 20px 0 28px; border-top: 1px solid var(--line); color: #78877f
         `    input_params: [theta_s_100, ${baryon}, ${coldName}]`,
         ...(isEquality ? ['    output_params: [z_eq]'] : []),
         '    extra_args:',
+        '      # Required: without reio_none, theta_s_100 includes reionization (~15σ high).',
         '      reio_parametrization: reio_none',
         '      recombination: HyRec',
         '      N_ncdm: 1',
