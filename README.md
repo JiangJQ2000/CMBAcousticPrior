@@ -44,4 +44,4 @@ The prior's θ<sub>*</sub> is CAMB's `thetastar`, computed with CosmoRec recombi
 
 If you use this prior, please cite:
 
-K. Lodha, J.-Q. Jiang, P. Mukherjee, A. Shafieloo, *Acoustic priors from the latest cosmic microwave background data*, arXiv:XXXX.XXXXX.
+K. Lodha, J.-Q. Jiang, P. Mukherjee, A. Shafieloo, *Acoustic priors from the latest cosmic microwave background data*, [arXiv:2611.33334](https://arxiv.org/abs/2611.33334).
